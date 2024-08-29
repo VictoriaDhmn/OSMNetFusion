@@ -2,23 +2,27 @@
 # %%
 import os
 import sys
-# shapely / pandas depreciation warning
-import warnings
-from shapely.errors import ShapelyDeprecationWarning
-warnings.filterwarnings("ignore", category=ShapelyDeprecationWarning) 
-warnings.filterwarnings("ignore", category=DeprecationWarning, message=".*np.find_common_type.*")
 # because of a geopandas warning
 os.environ['USE_PYGEOS'] = '0'
 
-# import the python files
-import p1_getOSMNetwork
-import p1_getFurtherOSMData
-import p1_getOtherData
-import p2_enrichData
-import p3_simplification
-
-
 if __name__ == "__main__":
+
+    # make sure all required packages are installed using the requirements.txt file
+    with open("requirements.txt") as f:
+        requirements = f.read().splitlines()
+    for r in requirements:
+        try:
+            exec("import " + r.split("==")[0])
+        except ImportError:
+            print("Package " + r + " not found. Please install all required packages listed in the requirements.txt file.")
+
+    # import the python files
+    import p1_getOSMNetwork
+    import p1_getFurtherOSMData
+    import p1_getOtherData
+    import p2_enrichData
+    import p3_simplification
+
     # add the current directory to the path
     currentDirectory = os.path.dirname(os.path.realpath(__file__))
     sys.path.append(currentDirectory)
