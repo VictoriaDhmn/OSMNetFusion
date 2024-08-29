@@ -2010,7 +2010,7 @@ class MotorizedEdge():
         self.lanes = self.getLanes(motorizedEdges.lanes,motorizedEdges.length)
         self.oneway = True in motorizedEdges['oneway'].unique() 
         self.maxspeed = self.getLanes(motorizedEdges.maxspeed,motorizedEdges.length)
-        self.pt_stop = motorizedEdges.pt_stops_on.max()
+        self.pt_stop = motorizedEdges.pt_stop_on.max()
         self.pt_routes = listify(motorizedEdges.pt_stop_routes)
 
         self.df = None # remove df after setting all params, to reduce data size        

@@ -737,7 +737,7 @@ def save_p2_result_2_file(gdf_nodes, gdf_edges, output_file=p2_result_fp):
     ox.save_graph_geopackage(graph, directed=True, filepath=output_file)
     print(f'Graph saved to {output_file}')
 
-def main(accidents=True, cycle_path_width=True):
+def main(public_transport=True, accidents=True, cycle_path_width=True):
     
     # load base network
     gdf_edges = gpd.read_file(network, layer='edges')
@@ -766,7 +766,12 @@ def main(accidents=True, cycle_path_width=True):
     if cycle_path_width: # manual input file
         gdf_edges = add_cycle_path_width(gdf_edges)
     gdf_edges = add_bicycle_parking(gdf_edges)
-    gdf_edges = add_pt_stops(gdf_edges)
+    if public_transport:
+        gdf_edges = add_pt_stops(gdf_edges)
+    else:
+        gdf_edges['pt_stop_on'] = ''
+        gdf_edges['pt_stop_count'] = ''
+        gdf_edges['pt_stop_routes'] = ''
 
     # update idxs and add missing columns
     gdf_nodes, gdf_edges = update_idxs(gdf_nodes, gdf_edges)
