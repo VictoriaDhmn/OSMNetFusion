@@ -1,7 +1,7 @@
 """
 Script for enriching the osm network with the additional data (OSM and non-OSM)
 - get_landuse_ratio: get landuse ratio for the edges
-- clean_bike_edge_data: clean data & Bike_access label
+- improve_bike_edges: generate bike_access label to identify where cyclists can / cannot go AND add missing edges where cyclists can go in both directions, but there is not edge in the opposite direction
 - add_cycle_paths: add cycleway category to the edges
 - merge_similar_columns: merge similar columns
 - add_elevation: add elevation to the nodes
@@ -174,9 +174,10 @@ def get_landuse_ratio(gdf_edges, kind='retail', input_file=retail_fp):
     print(f'gdf_edges shape after adding {kind} ratio {gdf_edges.shape}')
     return gdf_edges
 
-def clean_bike_edge_data(gdf_edges):
+def improve_bike_edges(gdf_edges):
     """
-    Clean data & Bike_access label - identify where cyclists can / cannot go
+    Generate bike_access label to identify where cyclists can / cannot go
+    AND add missing edges where cyclists can go in both directions, but there is not edge in the opposite direction
     Args:
         @gdf_edges: geopandas.GeoDataFrame, edges of the city
     Returns:
@@ -184,13 +185,15 @@ def clean_bike_edge_data(gdf_edges):
     """
     # EDGES
     gdf_edges['bike_access'] = 'yes'  # yes, no, bike only
-    # remove where cyclists cannot go
+    
+    # where cyclists cannot go
     edges_not_allowed = gdf_edges[
         (gdf_edges.highway.str.contains('trunk') == True) |
         (gdf_edges.bicycle.str.contains('use_sidepath') == True) |
         (gdf_edges.bicycle.str.contains('no') == True)
         ]
     gdf_edges.loc[edges_not_allowed.index, 'bike_access'] = 'no'
+    
     # if oneway for cars, add opposite link for bikes
     if ('oneway:bicycle' in gdf_edges.columns) and ('cycleway' in gdf_edges.columns):
         edges_to_add = gdf_edges[
@@ -206,6 +209,7 @@ def clean_bike_edge_data(gdf_edges):
         edges_to_add = gdf_edges[(gdf_edges['oneway'] == True)]
     to_add = []
     for itr, row in edges_to_add.iterrows():
+        # if there is no edge in the opposite direction
         if len(gdf_edges[(gdf_edges.u == row.v) & (gdf_edges.v == row.u)]) < 1:
             new_row = row
             # swap start / end
@@ -214,24 +218,15 @@ def clean_bike_edge_data(gdf_edges):
             new_row.v = end
             new_row.bike_access = 'bike_only'
             new_row.reversed = not row.reversed
-            # add to list
             to_add.append(new_row.values)
         else:  # opposite edges already exists, so only update bike_access
-            # display(row)
-            # display(gdf_edges[(gdf_edges.u==row.v)&(gdf_edges.v==row.u)])
             gdf_edges.loc[(gdf_edges.u == row.v) & (gdf_edges.v == row.u), 'bike_access'] = 'yes'
-    print('Edges added (bc only oneway for cars)', len(to_add))
-    print('Edges removed (bc bikes fobidden)', len(edges_not_allowed))
-    # DO WE HAVE TO ADD NEW NODES AS WELL?
-    # technically yes, but not so relevant bc for map matching i only use the edges
-    # and for the simplification i still have all information in the edges
-    # --> no, because there are no new edges
+    print('Edges added (bc only oneway for cars and no edge in opposite direction)', len(to_add))
     to_add = gpd.GeoDataFrame(to_add, index=range(len(gdf_edges), len(gdf_edges) + len(to_add)),
                               columns=gdf_edges.columns)
     gdf_edges = gpd.GeoDataFrame(pd.concat([gdf_edges, to_add]))
     print(f'gdf_edges shape after adding building ratio {gdf_edges.shape}')
-    # print("Example of gdf_edges")
-    # print(gdf_edges.sort_values('key', ascending=False).tail(2))
+    
     return gdf_edges
 
 def add_cycle_paths(gdf_edges):
@@ -610,6 +605,9 @@ def add_pt_stops(gdf_edges, input_file=ptStops_fp):
         @input_file: str, filepath for geopackage file with the public transport stops
     Returns:
         @gdf_edges: geopandas.GeoDataFrame, edges with public transport stops
+            - pt_stop_on: 0/1, if there is a public transport stop on the edge
+            - pt_stop_count: number of public transport stops on the edge
+            - pt_stop_routes: names of the public transport stops on the edge
     """
     # use the 'Point' layer of the public transport data
     if not os.path.isfile(input_file):
@@ -627,7 +625,7 @@ def add_pt_stops(gdf_edges, input_file=ptStops_fp):
     dists = gpd.sjoin_nearest(gdf_pt_stops[['member_ref', 'geometry','name']], subset_edges[['osmid', 'geometry']], how='inner', distance_col="distances", lsuffix='pt', rsuffix='edge', max_distance=30)
     # dists = dists.set_index(dists.index_edge)
     print(len(gdf_pt_stops), len(dists))
-    gdf_edges.loc[dists.index_edge.values, 'pt_stops_on'] = 1 # yes
+    gdf_edges.loc[dists.index_edge.values, 'pt_stop_on'] = 1 # yes
 
     # now count the number of different PT stops on each edge i.e. unique stop names
     gdf_edges['pt_stop_count'] = 0
@@ -752,7 +750,7 @@ def main(accidents=True, cycle_path_width=True):
     gdf_edges = get_landuse_ratio(gdf_edges, kind='building', input_file=building_fp)
     
     # clean data and add some information
-    gdf_edges = clean_bike_edge_data(gdf_edges)
+    gdf_edges = improve_bike_edges(gdf_edges)
     gdf_edges = add_cycle_paths(gdf_edges)
     gdf_nodes, gdf_edges = add_gradient(gdf_nodes, gdf_edges)
     
