@@ -218,6 +218,7 @@ Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos
 - `O` p3: add simplified bike path classification (Simone's version)
 - `O` p3: add/keep node on links that are very non-linear i.e. curves/turns
 - `O` p3: improve b_attributes and hence bicycle network
+- `O` Add credits
 - `?` Choose an open-source license
 - `?` RemoveDeg2Nodes?
 - `?` Implement calculating cycle path width
