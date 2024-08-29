@@ -1,0 +1,15 @@
+contextily==1.6.0
+fiona==1.9.6
+geopandas==0.14.4
+matplotlib==3.9.2
+numpy==2.1.0
+osmium==3.7.0
+overpy==0.7
+pandas==1.4.3
+psutil==6.0.0
+pyproj==3.6.1
+Requests==2.32.3
+scikit_learn==1.5.1
+scipy==1.14.1
+Shapely==2.0.6
+~yproj==3.4.1
