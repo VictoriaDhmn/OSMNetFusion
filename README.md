@@ -1,9 +1,8 @@
 # OSMTopoMerge
 
-## OVERVIEW
+## Overview
 
-**OSMTopoMerge**: A topologically simplified OSM network, enriched with additional (open) data sources - designed to provide a streamlined, multimodal network.  
-A.k.a. **OSM.STEM**: Simplified topology, enriched, multimodal.
+**OSMTopoMerge**: A topologically simplified OSM network, enriched with additional (open) data sources - designed to provide a streamlined, multimodal network. A.k.a. **OSM.STEM**: Simplified topology, enriched, multimodal.
 
 - Idea
 - Input data
@@ -18,7 +17,7 @@ A.k.a. **OSM.STEM**: Simplified topology, enriched, multimodal.
 
 ### Enrichment
 
-1. **Download the OSM Network**: Use `osmnx` to obtain the network, including various 'ways' such as paths and roads. Each edge has associated 'tags'.
+1. The road network is downloaded from OpenStreetMap using osmnx, including all kinds of paths and roads. Each edge has associated 'tags'.
    - Example: Edge `154470138` (a section of Adalbertstraße, Munich) has tags `['bicycle_road':'yes','cycleway':'opposite','max_speed':30]`. [See here](https://www.openstreetmap.org/way/154470138#map=18/48.15262/11.57712).
 2. There are two categories of additional information that is not readily available via OSM tags:
    - Derived from OSM data, e.g., bicycle amenities, green land-use, building coverage.
@@ -27,19 +26,18 @@ A.k.a. **OSM.STEM**: Simplified topology, enriched, multimodal.
 
 ### Simplified topology
 
-- OSM network includes comprehensive but complex topological information. This is both due to the multitude of complex intersections and the different paths for the various modes of transport. Here the topology is simplified to obtain a clearer street layout.
+- The OSM network includes comprehensive but complex topological information. This is both due to the multitude of complex intersections and the different paths for the various modes of transport. Here the topology is simplified to obtain a clearer street layout.
 - Tags of the individual directed links are carefully merged to minimize information loss. Considered tags are listed below.
 
 ### Multimodal
 
-- THe simplification disregards accessibility by different transport modes, but this is accounted for when merging information.
+- Initially, the simplification disregards accessibility by different transport modes, but this is accounted for when merging information.
 - Each link is labelled based on its accessibility by foot, bike, motorized traffic (and public transport - in progress). This allows easy extraction of networks by mode of transport.
 
 **Note**: This approach is tailored to OSM data. The simplification should theoretically work for custom networks, but this has not been tested.  
 **Note**: The degree of simplification can be customized in `configFile`.
 **NOTE**: Trajectory data can easily be map-matched to a mode-specific network using tools like [LeuvenMapMatching](https://github.com/wannesm/LeuvenMapMatching).
 
----
 
 ## Input data
 
@@ -68,7 +66,9 @@ A.k.a. **OSM.STEM**: Simplified topology, enriched, multimodal.
      |F|R|R|B|F|        F: foot path  --> |  i.e. consolidate all information into one edge
      |F|R|R|B|F|        B: bike path
      ```
-6. `p3_functions`: Functions for `p3_simplification`.
+6. `p3_functions`: Functions for `p3_simplification`. 
+
+More details on the methodology can be found here: [TODO: ADD LINK TO PPT SLIDES]. This is an example of the intial network (dark blue) and the resulting network (light blue) with the merged tags:
 
 <table>
   <tr>
