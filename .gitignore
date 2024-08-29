@@ -1,0 +1,19 @@
+# files to ignore
+
+# only upload the test case
+network_data/*
+!network_data/Munich_TEST
+!network_data/Munich_TEST/** 
+regional_data/*
+!regional_data/Munich/
+!regional_data/Munich/osmnx/
+!regional_data/Munich/osmnx/**
+regional_data/Munich/other/
+regional_data/Munich/osmnx/osmnx_PTStops_query.xml
+regional_data/Munich/osmnx/osmnx_PTStops.gpkg
+
+# ignore entirely
+cache
+__pycache__
+tests
+X_input_data
