@@ -27,7 +27,7 @@ if __name__ == "__main__":
     p1_getOSMNetwork.main()
     p1_getFurtherOSMData.main(ptstops=False, amenities=True, buildings=True, landuse=True, retail=True, signals=True)
     p1_getOtherData.main(elevation=False, bike_traffic=False, accidents=False, district_centers=False)
-    p2_enrichData.main(accidents=False, cycle_path_width=False)
+    p2_enrichData.main(public_transport=False, accidents=False, cycle_path_width=False)
     p3_simplification.main()
     print("\nAll steps have been executed.")
 
