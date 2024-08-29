@@ -5,9 +5,16 @@
 **OSMTopoMerge**: A topologically simplified OSM network, enriched with additional (open) data sources - designed to provide a streamlined, multimodal network.  
 A.k.a. **OSM.STEM**: Simplified topology, enriched, multimodal.
 
+- Idea
+- Input data
+- How to
+- Methodology
+- Tags / Attributes
+- Misc: Contact, Credits, Licence, Todos
+
 ---
 
-## IDEA
+## Idea
 
 ### Enrichment
 
@@ -34,15 +41,13 @@ A.k.a. **OSM.STEM**: Simplified topology, enriched, multimodal.
 
 ---
 
-## INPUT DATA
+## Input data
 
 - **Location of Interest**: Specify using coordinates or the city's OSM name.
 - **Optional - Accidents**: Accident locations as a `.gpkg` file.
 - **Optional - Cycle path widths**: Cycle path widths based on an `.shp` file as a `.csv` file (`osmid, width_cycle_path`).
 
----
-
-## HOW TO
+## How to
 
 1. Clone the repository.
 2. Set the location in `configFile` (or use the default location). If necessary, modify other parameters or file paths.
@@ -50,7 +55,7 @@ A.k.a. **OSM.STEM**: Simplified topology, enriched, multimodal.
 
 ---
 
-## STEPS
+## Methodology
 
 1. `p1_getOSMNetwork`: Download OSM network and a selection of available tags.
 2. `p1_getFurtherOSMData`: Download specific OSM data such as bicycle amenities for the region of interest.
@@ -74,7 +79,7 @@ A.k.a. **OSM.STEM**: Simplified topology, enriched, multimodal.
 
 ---
 
-## TAGS / ATTRIBUTES
+## Tags / Attributes
 
 ### Implemented Tags/Attributes
 
@@ -184,29 +189,24 @@ To add new tags or attributes, follow these steps:
 
 ---
 
-## CONTACT
+## Contact
 
 For any questions regarding OSM TopoMerge, please reach out to Victoria Dahmen via [Email](https://www.mos.ed.tum.de/vt/mitarbeiter-innen/dahmen-victoria/), or [submit an issue](https://github.com/OSMTopoMerge/issues) on GitHub
 
----
-
-## CREDITS
+## Credits
 
 *Acknowledgments here.*
 
----
-
-## LICENSE
+## License
 
 *Licensing details here.*
 
 ---
 
-## TODOs
+## ToDos
 
 Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos 
 
-- `Urgent` test code on another laptop?
 - `X` p3: currently bike racks are missing on some links...
 - `O` Sort out whether/where to use '', np.nan, None --> everywhere, but especially in 'simplification' (Convert all None to np.nan? Or depending on type?)
 - `O` Match information across UV and VU, e.g., if have cycleway:both, then add cycleway information to other edge
