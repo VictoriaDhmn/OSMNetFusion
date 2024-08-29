@@ -211,6 +211,7 @@ Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos
 - `O` Sort out whether/where to use '', np.nan, None --> everywhere, but especially in 'simplification' (Convert all None to np.nan? Or depending on type?)
 - `O` Match information across UV and VU, e.g., if have cycleway:both, then add cycleway information to other edge
 - `O` Improve consistency of 'empty' attributes --> empty list or null?
+- `O` Double-check that reverse edges are added for all footways/paths for pedestrians
 - `O` Manually check output
 - `O` Consider street levels / tunnels / bridges
 - `O` Improve readme
