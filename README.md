@@ -72,8 +72,8 @@ More details on the methodology can be found [here](https://syncandshare.lrz.de/
 
 <table>
   <tr>
-    <td><img src="Vis_TopoMerge_2.png" alt="Simplified topology (light blue)" style="width: 300px;"/></td>
-    <td><img src="Vis_TopoMergeAttributes.png" alt="Attribute per directed edge" style="width: 300px;"/></td>
+    <td><img src="Vis_OSMNetFusion_2.png" alt="Simplified topology (light blue)" style="width: 300px;"/></td>
+    <td><img src="Vis_OSMNetFusion_Attributes.png" alt="Attribute per directed edge" style="width: 300px;"/></td>
   </tr>
 </table>
 
@@ -185,7 +185,7 @@ To add new tags or attributes, follow these steps:
 
 ## Contact
 
-For any questions regarding OSM TopoMerge, please reach out to Victoria Dahmen via [Email](https://www.mos.ed.tum.de/vt/mitarbeiter-innen/dahmen-victoria/), or [submit an issue](https://github.com/OSMNetFusion/issues) on GitHub
+For any questions regarding OSMNetFusion, please reach out to Victoria Dahmen via [Email](https://www.mos.ed.tum.de/vt/mitarbeiter-innen/dahmen-victoria/), or [submit an issue](https://github.com/OSMNetFusion/issues) on GitHub
 
 
 ## License
