@@ -2,7 +2,7 @@
 
 ## Overview
 
-**OSMTopoMerge**: A topologically simplified OSM network, enriched with additional (open) data sources - designed to provide a streamlined, multimodal network. A.k.a. **OSM.STEM**: Simplified topology, enriched, multimodal.
+**OSMTopoMerge**: A topologically simplified OSM network, enriched with additional (open!) data sources - designed to provide a streamlined, multimodal network. A.k.a. **OSM.STEM**: Simplified topology, enriched, multimodal. **The only input required is the location of interest.**
 
 - Idea
 - Input data
