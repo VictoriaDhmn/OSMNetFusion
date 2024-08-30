@@ -11,10 +11,13 @@ if __name__ == "__main__":
     with open("requirements.txt") as f:
         requirements = f.read().splitlines()
     for r in requirements:
+        pckg = r.split("==")[0].lower()
+        pckg_import = pckg
+        pckg_import == "sklearn" if pckg=="scikit_learn" else pckg
         try:
-            exec("import " + r.split("==")[0])
+            exec("import " + pckg_import)
         except ImportError:
-            print("Package " + r + " not found. Please install all required packages listed in the requirements.txt file.")
+            print("Package " + pckg + " not found. Please install all required packages listed in the requirements.txt file.")
 
     # import the python files
     import p1_getOSMNetwork
