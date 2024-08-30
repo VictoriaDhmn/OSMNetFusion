@@ -193,13 +193,10 @@ To add new tags or attributes, follow these steps:
 
 For any questions regarding OSM TopoMerge, please reach out to Victoria Dahmen via [Email](https://www.mos.ed.tum.de/vt/mitarbeiter-innen/dahmen-victoria/), or [submit an issue](https://github.com/OSMTopoMerge/issues) on GitHub
 
-## Credits
-
-*Acknowledgments here.*
 
 ## License
 
-*Licensing details here.*
+MIT License.
 
 ---
 
@@ -209,17 +206,14 @@ Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos
 
 - `X` p3: currently bike racks are missing on some links...
 - `O` Sort out whether/where to use '', np.nan, None --> everywhere, but especially in 'simplification' (Convert all None to np.nan? Or depending on type?)
-- `O` Match information across UV and VU, e.g., if have cycleway:both, then add cycleway information to other edge
+- `O` Match attribute information across UV and VU, e.g., if have cycleway:both, then add cycleway information to other edge
 - `O` Improve consistency of 'empty' attributes --> empty list or null?
 - `O` Double-check that reverse edges are added for all footways/paths for pedestrians
-- `O` Manually check output
+- `O` Manually check output - look for bugs
 - `O` Consider street levels / tunnels / bridges
-- `O` Improve readme
 - `O` p3: add simplified bike path classification (Simone's version)
 - `O` p3: add/keep node on links that are very non-linear i.e. curves/turns
 - `O` p3: improve b_attributes and hence bicycle network
-- `O` Add credits
-- `?` Choose an open-source license
 - `?` RemoveDeg2Nodes?
 - `?` Implement calculating cycle path width
 - `?` More classes / refactor
