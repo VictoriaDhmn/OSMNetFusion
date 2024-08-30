@@ -1,8 +1,8 @@
-# OSMTopoMerge
+# OSMNetFusion
 
 ## Overview
 
-**OSMTopoMerge**: A topologically simplified OSM network, enriched with additional (open!) data sources - designed to provide a streamlined, multimodal network. A.k.a. **OSM.STEM**: Simplified topology, enriched, multimodal. **The only input required is the location of interest.**
+**OSMNetFusion**: A topologically simplified OSM network, enriched with additional (open!) data sources - designed to provide a streamlined, multimodal network. A.k.a. **OSMTopoMerge** or **OSM.STEM**: Simplified topology, enriched, multimodal. **The only input required is the location of interest.**
 
 - Idea
 - Input data
@@ -185,7 +185,7 @@ To add new tags or attributes, follow these steps:
 
 ## Contact
 
-For any questions regarding OSM TopoMerge, please reach out to Victoria Dahmen via [Email](https://www.mos.ed.tum.de/vt/mitarbeiter-innen/dahmen-victoria/), or [submit an issue](https://github.com/OSMTopoMerge/issues) on GitHub
+For any questions regarding OSM TopoMerge, please reach out to Victoria Dahmen via [Email](https://www.mos.ed.tum.de/vt/mitarbeiter-innen/dahmen-victoria/), or [submit an issue](https://github.com/OSMNetFusion/issues) on GitHub
 
 
 ## License
