@@ -68,7 +68,7 @@
      ```
 6. `p3_functions`: Functions for `p3_simplification`. 
 
-More details on the methodology can be found here: [TODO: ADD LINK TO PPT SLIDES]. This is an example of the intial network (dark blue) and the resulting network (light blue) with the merged tags:
+More details on the methodology can be found [here](https://syncandshare.lrz.de/getlink/fiLtep61RmASpNR5KdphPz/OSMTopoMerge_2024_08_27.pdf). This is an example of the intial network (dark blue) and the resulting network (light blue) with the merged tags:
 
 <table>
   <tr>
