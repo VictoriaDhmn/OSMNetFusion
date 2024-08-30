@@ -141,11 +141,8 @@ signals_filepath = regional_data_dir + f"{city_info['city']}/osmnx/osmnx_traffic
 
 # p1_getOtherData.py
 elev_filepath = network_data_dir + f"{version}/add_data/{version}_elevations.json"
-# DISABLED: accidents_filepath = regional_data_dir + f"{city_info['city']}/other/bike_accidents.gpkg"
-# DISABLED: bike_traffic_vol_output_filepath = regional_data_dir + f"{city_info['city']}/other/bike_traffic_volume.json"
 
 # p2_enrichData.py
-accident_filepath = regional_data_dir + f"{city_info['city']}/other/bike_accidents.gpkg"
 cycle_path_w_filepath = regional_data_dir + f"{city_info['city']}/other/cycle_path_widths_8x8km.csv" 
 p2_result_filepath = network_data_dir + f"{version}/p2_{version}_enriched.gpkg"
 
@@ -184,7 +181,7 @@ HIGHWAY_RANKING = {
     'bridleway':3
 }
 # 5. Buffers for first clustering --> nodes are buffered based on the highest ranking connected highway type
-clusterThreshold = 40
+clusterThreshold = 50
 HIGHWAY_BUFFERS_1 = {'trunk':18,
         'trunk_link':18,
         'primary':18,

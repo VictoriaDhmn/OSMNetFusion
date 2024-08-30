@@ -165,12 +165,6 @@ More details on the methodology can be found [here](https://syncandshare.lrz.de/
 | `m_pt_stop`             | self.motorizedEdge.pt_stop                | OSM other                 |
 | `m_pt_routes`           | self.motorizedEdge.pt_routes              | OSM other                 |
 
-### Tags/Attributes Partially Implemented
-
-- Bicycle accidents: Other (Todo: p2, p3)
-- Bicycle traffic volume (Radverkehrzählungen): Other (Todo: p2, p3)
-- Air emissions/pollution: Other (Todo: p1, p2, p3)
-
 ### To Add New Tags/Attributes
 
 To add new tags or attributes, follow these steps:
@@ -210,8 +204,9 @@ Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos
 - `O` Improve consistency of 'empty' attributes --> empty list or null?
 - `O` Double-check that reverse edges are added for all footways/paths for pedestrians
 - `O` Manually check output - look for bugs
+- `O` Improved computation of bicycle path width by (optionally) using a .shp file
 - `O` Consider street levels / tunnels / bridges
-- `O` p3: add simplified bike path classification (Simone's version)
+- `O` p3: maybe add simplified bike path classification (Simone's version)
 - `O` p3: add/keep node on links that are very non-linear i.e. curves/turns
 - `O` p3: improve b_attributes and hence bicycle network
 - `?` RemoveDeg2Nodes?

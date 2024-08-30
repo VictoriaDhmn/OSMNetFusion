@@ -6,7 +6,6 @@ Script for enriching the osm network with the additional data (OSM and non-OSM)
 - merge_similar_columns: merge similar columns
 - add_elevation: add elevation to the nodes
 - add_gradient: add gradient to the edges
-- add_accidents: add accidents to the edges
 - add_traffic_lights: add traffic lights to the nodes
 - add_cycle_path_width: add cycle path width to the edges
 - add_bicycle_parking: add bicycle parking to the edges
@@ -19,7 +18,6 @@ Script for enriching the osm network with the additional data (OSM and non-OSM)
 Inputs
 - configFile.py: configuration file with all values
     - network: filepath for geopackage file with the osm network
-    - accidents_fp: filepath for geopackage file with the accidents
     - signals_fp: filepath for geopackage file with the traffic signals
     - cyclePathW_fp: filepath for csv file with the cycle path widths
     - bikeAmenities_fp: filepath for geopackage file with the bike amenities
@@ -51,7 +49,6 @@ import configFile
 # VALUES #############################################################################
 
 network = configFile.p1_result_filepath
-accidents_fp = configFile.accident_filepath
 signals_fp = configFile.signals_filepath
 cyclePathW_fp = configFile.cycle_path_w_filepath
 bikeAmenities_fp = configFile.bike_amenities_filepath
@@ -425,49 +422,6 @@ def add_gradient(gdf_nodes, gdf_edges):
         gdf_edges.loc[edge.Index, 'severity'] = round(severity, 4)
     return gdf_nodes, gdf_edges
 
-def add_accidents(gdf_edges, input_file=accidents_fp):
-    """
-    Add accidents to the edges
-    Args:
-        @gdf_edges: geopandas.GeoDataFrame, edges of the city
-        @input_file: str, filepath for geopackage file with the accidents
-    Returns:
-        @gdf_edges: geopandas.GeoDataFrame, edges with accidents
-    """
-    if not os.path.isfile(input_file):
-        raise ValueError('Input file {} containing accidents doesn''t exist.'.format(input_file))
-    # Match Accidents to bike network
-    gdf_accidents = gpd.read_file(input_file, driver="GPKG", layer='accidents')
-    if gdf_accidents.shape[0] == 0:
-        raise ValueError('Accidents file is empty')
-
-    gdf_accidents['edge'] = 0
-    gdf_edges['accidents'] = 0
-    gdf_edges['accident_deadly'] = 0
-    gdf_edges['accident_serious'] = 0
-    gdf_edges['accident_minor'] = 0
-    gdf_edges['accident_ids'] = ''
-
-    edges = gdf_edges.copy()
-    for accident in gdf_accidents.itertuples():
-        r = edges.sindex.nearest(accident.geometry)
-        accident = accident._replace(edge=r[1][0])
-
-        if int(accident.UKATEGORIE) == 1:
-            edges.loc[r[1][0], 'accident_deadly'] += 1
-        elif int(accident.UKATEGORIE) == 2:
-            edges.loc[r[1][0], 'accident_serious'] += 1
-        else:
-            edges.loc[r[1][0], 'accident_minor'] += 1
-
-        edges.loc[r[1][0], 'accidents'] += 1
-        edges.loc[r[1][0], 'accident_ids'] += ', ' + str(accident.Index + 1) if len(
-            edges.loc[r[1][0], 'accident_ids']) else str(accident.Index + 1)
-    gdf_edges = edges
-    # Accidents per meter (because every edge has a different length = not comparable)
-    gdf_edges['accidents_per_meter'] = gdf_edges['accidents'] / gdf_edges['length']
-    return gdf_edges
-
 def add_traffic_lights(gdf_nodes, input_file=signals_fp):
     """
     Add traffic lights to the nodes
@@ -760,8 +714,6 @@ def main(public_transport=True, accidents=True, cycle_path_width=True):
     gdf_edges = merge_similar_columns(gdf_edges, 'smoothness', '_36', newName='width')
 
     # add additional information
-    if accidents:
-        gdf_edges = add_accidents(gdf_edges)
     gdf_nodes = add_traffic_lights(gdf_nodes)
     if cycle_path_width: # manual input file
         gdf_edges = add_cycle_path_width(gdf_edges)
