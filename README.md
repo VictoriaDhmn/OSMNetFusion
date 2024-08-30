@@ -198,6 +198,7 @@ MIT License.
 
 Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos 
 
+- `X` update example in pdf doc! current one is very old
 - `X` p3: currently bike racks are missing on some links...
 - `O` Sort out whether/where to use '', np.nan, None --> everywhere, but especially in 'simplification' (Convert all None to np.nan? Or depending on type?)
 - `O` Match attribute information across UV and VU, e.g., if have cycleway:both, then add cycleway information to other edge
