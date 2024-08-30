@@ -68,7 +68,7 @@
      ```
 6. `p3_functions`: Functions for `p3_simplification`. 
 
-More details on the methodology can be found [here](https://syncandshare.lrz.de/getlink/fi5GxqTkFAsBio8ezLw2iZ/OSMNetFusion_2024_08_30.pdf). This is an example of the intial network (dark blue) and the resulting network (light blue) with the merged tags:
+More details on the methodology can be found [here](https://syncandshare.lrz.de/getlink/fiBGRRrPDCYzWHYNzjnXWq/OSMNetFusion_2024_08_30.pdf). This is an example of the intial network (dark blue) and the resulting network (light blue) with the merged tags:
 
 <table>
   <tr>
@@ -198,7 +198,6 @@ MIT License.
 
 Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos 
 
-- `X` update example in pdf doc! current one is very old
 - `X` p3: currently bike racks are missing on some links...
 - `O` Sort out whether/where to use '', np.nan, None --> everywhere, but especially in 'simplification' (Convert all None to np.nan? Or depending on type?)
 - `O` Match attribute information across UV and VU, e.g., if have cycleway:both, then add cycleway information to other edge
