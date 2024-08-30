@@ -42,7 +42,6 @@
 ## Input data
 
 - **Location of Interest**: Specify using coordinates or the city's OSM name.
-- **Optional - Accidents**: Accident locations as a `.gpkg` file.
 - **Optional - Cycle path widths**: Cycle path widths based on an `.shp` file as a `.csv` file (`osmid, width_cycle_path`).
 
 ## How to
