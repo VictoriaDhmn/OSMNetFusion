@@ -46,7 +46,7 @@ This is an example of the intial network (dark blue) and the resulting network (
 **Note**: This approach is tailored to OSM data. The simplification should theoretically work for custom networks, but this has not been tested.   
 **Note**: The degree of simplification can be customized in `configFile`.  
 **Note**: Trajectory data can easily be map-matched to a mode-specific network using tools like [LeuvenMapMatching](https://github.com/wannesm/LeuvenMapMatching).  
-**Note**: The network can easily be mapped back to the initial OSM network.  
+**Note**: The network can easily be mapped back to the initial OSM network using `l_osmid`.  
 
 ## Input data
 
