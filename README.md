@@ -43,10 +43,10 @@ This is an example of the intial network (dark blue) and the resulting network (
 - Initially, the simplification disregards accessibility by different transport modes, but this is accounted for when merging information.
 - Each link is labelled based on its accessibility by foot, bike, motorized traffic (and public transport - in progress). This allows easy extraction of networks by mode of transport.
 
-**Note**: This approach is tailored to OSM data. The simplification should theoretically work for custom networks, but this has not been tested.  
-**Note**: The degree of simplification can be customized in `configFile`.
-**NOTE**: Trajectory data can easily be map-matched to a mode-specific network using tools like [LeuvenMapMatching](https://github.com/wannesm/LeuvenMapMatching).
-**NOTE**: The network can easily be mapped back to the initial OSM network.
+**Note**: This approach is tailored to OSM data. The simplification should theoretically work for custom networks, but this has not been tested.   
+**Note**: The degree of simplification can be customized in `configFile`.  
+**Note**: Trajectory data can easily be map-matched to a mode-specific network using tools like [LeuvenMapMatching](https://github.com/wannesm/LeuvenMapMatching).  
+**Note**: The network can easily be mapped back to the initial OSM network.  
 
 ## Input data
 
