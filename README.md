@@ -11,7 +11,7 @@
 - Tags / Attributes
 - Misc: Contact, Credits, Licence, Todos
 
-This is an example of the intial network (dark blue) and the resulting network (light blue) with the merged tags with general ('g'), bicycle ('b'), walking ('w') and motorized traffic ('m') attributes:
+This is an example of the intial network (dark blue) and the resulting network (light blue) with the merged tags of a selected link with general ('g'), bicycle ('b'), walking ('w') and motorized traffic ('m') attributes:
 
 <table>
   <tr>
