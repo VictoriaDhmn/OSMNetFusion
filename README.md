@@ -78,8 +78,6 @@ This is an example of the intial network (dark blue) and the resulting network (
 
 More details on the methodology can be found [here](https://syncandshare.lrz.de/getlink/fiBGRRrPDCYzWHYNzjnXWq/OSMNetFusion_2024_08_30.pdf). 
 
----
-
 ## Tags / Attributes
 
 ### Implemented Tags/Attributes
@@ -192,8 +190,6 @@ For any questions regarding OSMNetFusion, please reach out to Victoria Dahmen vi
 ## License
 
 MIT License.
-
----
 
 ## ToDos
 
