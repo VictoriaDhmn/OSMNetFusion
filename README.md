@@ -11,6 +11,15 @@
 - Tags / Attributes
 - Misc: Contact, Credits, Licence, Todos
 
+This is an example of the intial network (dark blue) and the resulting network (light blue) with the merged tags:
+
+<table>
+  <tr>
+    <td><img src="Vis_OSMNetFusion_2.png" alt="Simplified topology (light blue)" style="width: 300px;"/></td>
+    <td><img src="Vis_OSMNetFusion_Attributes.png" alt="Attribute per directed edge" style="width: 300px;"/></td>
+  </tr>
+</table>
+
 ---
 
 ## Idea
@@ -67,14 +76,7 @@
      ```
 6. `p3_functions`: Functions for `p3_simplification`. 
 
-More details on the methodology can be found [here](https://syncandshare.lrz.de/getlink/fiBGRRrPDCYzWHYNzjnXWq/OSMNetFusion_2024_08_30.pdf). This is an example of the intial network (dark blue) and the resulting network (light blue) with the merged tags:
-
-<table>
-  <tr>
-    <td><img src="Vis_OSMNetFusion_2.png" alt="Simplified topology (light blue)" style="width: 300px;"/></td>
-    <td><img src="Vis_OSMNetFusion_Attributes.png" alt="Attribute per directed edge" style="width: 300px;"/></td>
-  </tr>
-</table>
+More details on the methodology can be found [here](https://syncandshare.lrz.de/getlink/fiBGRRrPDCYzWHYNzjnXWq/OSMNetFusion_2024_08_30.pdf). 
 
 ---
 
