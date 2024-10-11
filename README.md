@@ -224,7 +224,7 @@ Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos
 
 *TODO: edit the configfile before building the package? Or is that irrelevant?*
 
-Build locally running the following commands from the overarching `OSMNetFusion` folder:
+Build locally by running the following commands from the overarching `OSMNetFusion` folder:
 ``` 
 python setup.py sdist bdist_wheel
 pip install . 
