@@ -93,7 +93,8 @@ CFhighwayBuffers2 = configFile.HIGHWAY_BUFFERS_2
 CFclusterThreshold = configFile.clusterThreshold
 CFgeom_col = configFile.geom_col
 CFversion = configFile.version
-CFp3_result_filepath = configFile.p3_result_filepath
+# CFp3_result_filepath = configFile.p3_result_filepath
+CFp3_result_filepath_gpkg = configFile.p3_result_filepath_gpkg
 
 def main():
     ############################################
@@ -414,19 +415,19 @@ def main():
         gdfNodes[c] = gdfNodes[c].astype('string')
     
     # SAVE - check if CFp3_result_filepath exists, otherwise create the folder
-    if not os.path.exists(CFp3_result_filepath):
-        os.makedirs(CFp3_result_filepath)
-    print('Files saved to: ') 
-    print('\t',CFp3_result_filepath+str(CFversion)+'_edges'+'.shp')
-    print('\t',CFp3_result_filepath+str(CFversion)+'_nodes'+'.shp')
-    gdfEdges.to_file(CFp3_result_filepath+str(CFversion)+'_edges'+'.shp')
-    gdfNodes.to_file(CFp3_result_filepath+str(CFversion)+'_nodes'+'.shp')
+    # if not os.path.exists(CFp3_result_filepath):
+    #     os.makedirs(CFp3_result_filepath)
+    # print('Files saved to: ') 
+    # print('\t',CFp3_result_filepath+str(CFversion)+'_edges'+'.shp')
+    # print('\t',CFp3_result_filepath+str(CFversion)+'_nodes'+'.shp')
+    # gdfEdges.to_file(CFp3_result_filepath+str(CFversion)+'_edges'+'.shp')
+    # gdfNodes.to_file(CFp3_result_filepath+str(CFversion)+'_nodes'+'.shp')
     
     # Save as graph as Geopackage
     print('Files saved to: ')
-    print('\t',CFp3_result_filepath+str(CFversion)+'.gpkg')
-    gdfEdges.to_file(CFp3_result_filepath+str(CFversion)+'.gpkg', layer='edges', driver="GPKG")
-    gdfNodes.to_file(CFp3_result_filepath+str(CFversion)+'.gpkg', layer='nodes', driver="GPKG")
+    print('\t',CFp3_result_filepath_gpkg)
+    gdfEdges.to_file(CFp3_result_filepath_gpkg, layer='edges', driver="GPKG")
+    gdfNodes.to_file(CFp3_result_filepath_gpkg, layer='nodes', driver="GPKG")
     
     print("Completed step 13 in %s"%(round(time.time()-start,2)))
     print("Completed in %s"%(round(time.time()-startX,2)))

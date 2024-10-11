@@ -146,7 +146,8 @@ p2_result_filepath = network_data_dir + f"{version}/p2_{version}_enriched.gpkg"
 
 # p3_simplification.py
 # 1. Filepath of output network 
-p3_result_filepath = network_data_dir + f"{version}/p3_simplified_data/" 
+# p3_result_filepath = network_data_dir + f"{version}/p3_simplified_data/" 
+p3_result_filepath_gpkg = network_data_dir + f"{version}/p3_{version}_simplified.gpkg"
 # 2a. Set input crs and output geometry mode
 crs = "EPSG:4326"   #  this CRS corresponds to UTM 32N
 # geometry_reassigned:  end points of an edge are reassigned to the nearest node cluster
