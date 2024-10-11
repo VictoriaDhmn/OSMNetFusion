@@ -195,19 +195,18 @@ MIT License.
 
 Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos 
 
-- `X` p3: currently bike racks are missing on some links...
-- `O` Sort out whether/where to use '', np.nan, None --> everywhere, but especially in 'simplification' (Convert all None to np.nan? Or depending on type?)
+- `X` p3: currently bike racks are missing on some links
+- `O` Sort out whether/where to use '', np.nan, None 
 - `O` Match attribute information across UV and VU, e.g., if have cycleway:both, then add cycleway information to other edge
 - `O` Improve consistency of 'empty' attributes --> empty list or null?
 - `O` Double-check that reverse edges are added for all footways/paths for pedestrians
 - `O` Manually check output - look for bugs
-- `O` Improved computation of bicycle path width by (optionally) using a .shp file
 - `O` Consider street levels / tunnels / bridges
-- `O` p3: maybe add simplified bike path classification (Simone's version)
+- `O` p3: maybe add a more simplified bike path classification
 - `O` p3: add/keep node on links that are very non-linear i.e. curves/turns
-- `O` p3: improve b_attributes and hence bicycle network
+- `O` p3: maybe improve b_attributes and hence bicycle network
 - `?` RemoveDeg2Nodes?
-- `?` Implement calculating cycle path width
+- `?` Implement calculating cycle path width (optionally) using a .shp file
 - `?` More classes / refactor
 
 
