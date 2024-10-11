@@ -422,6 +422,12 @@ def main():
     gdfEdges.to_file(CFp3_result_filepath+str(CFversion)+'_edges'+'.shp')
     gdfNodes.to_file(CFp3_result_filepath+str(CFversion)+'_nodes'+'.shp')
     
+    # Save as graph as Geopackage
+    print('Files saved to: ')
+    print('\t',CFp3_result_filepath+str(CFversion)+'.gpkg')
+    gdfEdges.to_file(CFp3_result_filepath+str(CFversion)+'.gpkg', layer='edges', driver="GPKG")
+    gdfNodes.to_file(CFp3_result_filepath+str(CFversion)+'.gpkg', layer='nodes', driver="GPKG")
+    
     print("Completed step 13 in %s"%(round(time.time()-start,2)))
     print("Completed in %s"%(round(time.time()-startX,2)))
 
