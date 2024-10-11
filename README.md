@@ -233,7 +233,36 @@ pip install .
 In your python script, import the package as: 
 ```
 from osmnetfusion.runSimplification import runSimplification
+import osmnetfusion.configFile as configFile
+
+# 1. FOR VERSION CONTROL
+configFile.version = 'Munich_TEST'
+
+# 2. FOR QUERYING OSM DATA
+# Assign city and country values using a predefined city or custom input
+print('Available predefined cities: ', configFile.city_dict.keys())
+configFile.predefined_city = True
+if configFile.predefined_city:
+    configFile.city_info = configFile.city_dict['Munich']
+else:
+    configFile.city_info = {'city': 'Munich', 'country': 'Germany', 'city_OSM': 'München'}  
+
+# 3. FOR SETTING THE NETWORK BOUNDARIES
+# Select 'place' or 'coordinates'
+configFile.boundary_mode = 'place'
+if configFile.boundary_mode == 'place':
+    configFile.location = f'{configFile.city_info["city_OSM"]}, {configFile.city_info["country"]}'
+    configFile.dist_in_meters = 1500 # Radius in meters
+else:
+    configFile.coords_upper_left = 48.15847740556768, 11.556108918739799 
+    configFile.coords_lower_right = 48.152471559463216, 11.567313793292625
+
+# Only set this to True if the PT stops/routes cannot be retrieved with the OSM API, i.e., you receive an error message
+configFile.manual_OSM_PT_query = False
+
+# THEN
 runSimplification()
+print('The network data has been saved in the folder: network_data/', configFile.version)
 ```
 
 
