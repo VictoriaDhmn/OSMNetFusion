@@ -11,6 +11,15 @@
 - Tags / Attributes
 - Misc: Contact, Credits, Licence, Todos
 
+This is an example of the intial network (dark blue) and the resulting network (light blue) with the merged tags of a selected link with general ('g'), bicycle ('b'), walking ('w') and motorized traffic ('m') attributes:
+
+<table>
+  <tr>
+    <td><img src="Vis_OSMNetFusion_2.png" alt="Simplified topology (light blue)" style="width: 300px;"/></td>
+    <td><img src="Vis_OSMNetFusion_Attributes.png" alt="Attribute per directed edge" style="width: 300px;"/></td>
+  </tr>
+</table>
+
 ---
 
 ## Idea
@@ -34,15 +43,14 @@
 - Initially, the simplification disregards accessibility by different transport modes, but this is accounted for when merging information.
 - Each link is labelled based on its accessibility by foot, bike, motorized traffic (and public transport - in progress). This allows easy extraction of networks by mode of transport.
 
-**Note**: This approach is tailored to OSM data. The simplification should theoretically work for custom networks, but this has not been tested.  
-**Note**: The degree of simplification can be customized in `configFile`.
-**NOTE**: Trajectory data can easily be map-matched to a mode-specific network using tools like [LeuvenMapMatching](https://github.com/wannesm/LeuvenMapMatching).
-
+**Note**: This approach is tailored to OSM data. The simplification should theoretically work for custom networks, but this has not been tested.   
+**Note**: The degree of simplification can be customized in `configFile`.  
+**Note**: Trajectory data can easily be map-matched to a mode-specific network using tools like [LeuvenMapMatching](https://github.com/wannesm/LeuvenMapMatching).  
+**Note**: The network can easily be mapped back to the initial OSM network using `l_osmid`.  
 
 ## Input data
 
 - **Location of Interest**: Specify using coordinates or the city's OSM name.
-- **Optional - Accidents**: Accident locations as a `.gpkg` file.
 - **Optional - Cycle path widths**: Cycle path widths based on an `.shp` file as a `.csv` file (`osmid, width_cycle_path`).
 
 ## How to
@@ -68,16 +76,7 @@
      ```
 6. `p3_functions`: Functions for `p3_simplification`. 
 
-More details on the methodology can be found [here](https://syncandshare.lrz.de/getlink/fiBGRRrPDCYzWHYNzjnXWq/OSMNetFusion_2024_08_30.pdf). This is an example of the intial network (dark blue) and the resulting network (light blue) with the merged tags:
-
-<table>
-  <tr>
-    <td><img src="Vis_OSMNetFusion_2.png" alt="Simplified topology (light blue)" style="width: 300px;"/></td>
-    <td><img src="Vis_OSMNetFusion_Attributes.png" alt="Attribute per directed edge" style="width: 300px;"/></td>
-  </tr>
-</table>
-
----
+More details on the methodology can be found [here](https://syncandshare.lrz.de/getlink/fiBGRRrPDCYzWHYNzjnXWq/OSMNetFusion_2024_08_30.pdf). 
 
 ## Tags / Attributes
 
@@ -192,25 +191,22 @@ For any questions regarding OSMNetFusion, please reach out to Victoria Dahmen vi
 
 MIT License.
 
----
-
 ## ToDos
 
 Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos 
 
-- `X` p3: currently bike racks are missing on some links...
-- `O` Sort out whether/where to use '', np.nan, None --> everywhere, but especially in 'simplification' (Convert all None to np.nan? Or depending on type?)
+- `X` p3: currently bike racks are missing on some links
+- `O` Sort out whether/where to use '', np.nan, None 
 - `O` Match attribute information across UV and VU, e.g., if have cycleway:both, then add cycleway information to other edge
 - `O` Improve consistency of 'empty' attributes --> empty list or null?
 - `O` Double-check that reverse edges are added for all footways/paths for pedestrians
 - `O` Manually check output - look for bugs
-- `O` Improved computation of bicycle path width by (optionally) using a .shp file
 - `O` Consider street levels / tunnels / bridges
-- `O` p3: maybe add simplified bike path classification (Simone's version)
+- `O` p3: maybe add a more simplified bike path classification
 - `O` p3: add/keep node on links that are very non-linear i.e. curves/turns
-- `O` p3: improve b_attributes and hence bicycle network
+- `O` p3: maybe improve b_attributes and hence bicycle network
 - `?` RemoveDeg2Nodes?
-- `?` Implement calculating cycle path width
+- `?` Implement calculating cycle path width (optionally) using a .shp file
 - `?` More classes / refactor
 
 
