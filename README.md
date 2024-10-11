@@ -67,7 +67,8 @@ In `runSimplification:main`:
     p1_getOtherData.main(elevation=False)
     p2_enrichData.main(public_transport=True, cycle_path_width=False)
     p3_simplification.main()
-    print("\nAll steps have been executed.")```
+    print("\nAll steps have been executed.")
+```
     
 ---
 
