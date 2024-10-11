@@ -8,16 +8,7 @@ os.environ['USE_PYGEOS'] = '0'
 def runSimplification():
 
     # make sure all required packages are installed using the requirements.txt file
-    with open("requirements.txt") as f:
-        requirements = f.read().splitlines()
-    for r in requirements:
-        pckg = r.split("==")[0].lower()
-        pckg_import = pckg
-        pckg_import == "sklearn" if pckg=="scikit_learn" else pckg
-        try:
-            exec("import " + pckg_import)
-        except ImportError:
-            print("Package " + pckg + " not found. Please install all required packages listed in the requirements.txt file.")
+    # NOTE: see setup.py for the required packages
 
     # import the python files
     import p1_getOSMNetwork
