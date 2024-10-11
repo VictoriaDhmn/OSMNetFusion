@@ -224,7 +224,7 @@ Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos
 
 ## Use as a package (in progress)
 
-*TODO: edit the configfile before building the package? Or is that irrelevant?*
+_TODO: improve customization options and adjusting the location_
 
 Build locally by running the following commands from the overarching `OSMNetFusion` folder:
 ``` 
