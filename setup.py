@@ -24,7 +24,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'runSimplification=osmnetfusion.runSimplification:main',  # Adjust as necessary
+            'runSimplification=osmnetfusion.runSimplification:main',
         ],
     },
     author='Victoria Dahmen',
