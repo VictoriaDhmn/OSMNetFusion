@@ -17,3 +17,5 @@ cache
 __pycache__
 tests
 X_input_data
+src/OSMNetFusion.egg-info
+build

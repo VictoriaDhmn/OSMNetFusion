@@ -220,6 +220,21 @@ Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos
 - `?` Implement calculating cycle path width (optionally) using a .shp file
 - `?` More classes / refactor
 
+## Use as a package (in progress)
+
+*TODO: edit the configfile before building the package? Or is that irrelevant?*
+
+Build locally running the following commands from the overarching `OSMNetFusion` folder:
+``` 
+python setup.py sdist bdist_wheel
+pip install . 
+```
+
+In your python script, import the package as: 
+```
+from osmnetfusion.runSimplification import runSimplification
+runSimplification()
+```
 
 
 

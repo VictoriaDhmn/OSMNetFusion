@@ -5,7 +5,7 @@ import sys
 # because of a geopandas warning
 os.environ['USE_PYGEOS'] = '0'
 
-if __name__ == "__main__":
+def runSimplification():
 
     # make sure all required packages are installed using the requirements.txt file
     with open("requirements.txt") as f:
@@ -33,10 +33,13 @@ if __name__ == "__main__":
     # run the steps
     p1_getOSMNetwork.main()
     p1_getFurtherOSMData.main(ptstops=False, amenities=True, buildings=True, landuse=True, retail=True, signals=True)
-    p1_getOtherData.main(elevation=True)
+    p1_getOtherData.main(elevation=False)
     p2_enrichData.main(public_transport=True, cycle_path_width=False)
     p3_simplification.main()
     print("\nAll steps have been executed.")
+
+if __name__ == "__main__":
+    runSimplification()
 
 # %%
 

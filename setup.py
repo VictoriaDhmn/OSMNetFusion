@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 setup(
     name='OSMNetFusion',
     version='0.0.1',
-    packages=find_packages(where='code'),
-    package_dir={'': 'code'},
+    packages=find_packages(where='src'),
+    package_dir={'': 'src'},
     install_requires=[
         'contextily>=1.6.2',
         'fiona>=1.10.1',
@@ -24,7 +24,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'runSimplification=code.runSimplification:main',  # Adjust as necessary
+            'runSimplification=osmnetfusion.runSimplification:main',  # Adjust as necessary
         ],
     },
     author='Victoria Dahmen',

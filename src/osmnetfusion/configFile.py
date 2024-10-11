@@ -4,8 +4,6 @@
 # ADJUST LOCATION --------------------------------------------------------
 # ------------------------------------------------------------------------
 
-# PLEASE ADJUST THE BELOW VARIABLES 
-
 # 1. FOR VERSION CONTROL
 version = 'Munich_TEST' 
 
@@ -143,7 +141,7 @@ signals_filepath = regional_data_dir + f"{city_info['city']}/osmnx/osmnx_traffic
 elev_filepath = network_data_dir + f"{version}/add_data/{version}_elevations.json"
 
 # p2_enrichData.py
-cycle_path_w_filepath = regional_data_dir + f"{city_info['city']}/other/cycle_path_widths_8x8km.csv" 
+cycle_path_w_filepath = network_data_dir + f"{version}/add_{version}_cycle_path_widths.csv"
 p2_result_filepath = network_data_dir + f"{version}/p2_{version}_enriched.gpkg"
 
 # p3_simplification.py
