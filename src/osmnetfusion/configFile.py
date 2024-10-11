@@ -40,8 +40,8 @@ manual_OSM_PT_query = False
 place = {"city": city_info['city'], "country": city_info['country']}
 
 # if necessary, adjust the directory of the network / regional data
-network_data_dir = '../network_data/'
-regional_data_dir = '../regional_data/'
+network_data_dir = '../../network_data/'
+regional_data_dir = '../../regional_data/'
 
 # p1_getOSMNetwork.py
 p1_result_filepath = network_data_dir + f"{version}/p1_{version}_osmnx.gpkg"
