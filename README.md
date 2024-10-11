@@ -59,6 +59,17 @@ This is an example of the intial network (dark blue) and the resulting network (
 2. Set the location in `configFile` (or use the default location). If necessary, modify other parameters or file paths.
 3. Run `runSimplification.py` in an IDE (or otherwise). Comment out individual steps if needed.
 
+Runtime: approx. 10-20mins for a 16km2 area, if all steps are executed. As the steps build on each other, `p3_simplification` may be executed standalone, yet if `p1_getFurtherOSMData` is altered, the subsequent steps must be rerun. 
+In `runSimplification:main`:
+``` python
+    p1_getOSMNetwork.main()
+    p1_getFurtherOSMData.main(ptstops=False, amenities=True, buildings=True, landuse=True, retail=True, signals=True)
+    p1_getOtherData.main(elevation=False)
+    p2_enrichData.main(public_transport=True, cycle_path_width=False)
+    p3_simplification.main()
+    print("\nAll steps have been executed.")
+```
+    
 ---
 
 ## Methodology
