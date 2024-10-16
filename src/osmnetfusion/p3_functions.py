@@ -120,6 +120,8 @@ def splitCurves(edgesIn,nodesIn,maxAngleInitial=75,maxAnglePrev=60,addNodes=True
     baseIdx = 10000000
     while baseIdx<np.max([nodes.index.max(),edges.index.max()]):
         baseIdx*=100
+        if baseIdx>100000000000000000000:
+            print(xxx)
     if (baseIdx<np.max(edgesIn.index.values)) | (baseIdx<np.max(nodesIn.index.values)):
         print('ERROR: input edge/node indices are too high. Update the newEdgeIdx and newNodeIdx in the splitCurves function.')
         print(xxx)
@@ -488,6 +490,8 @@ def splitEdgeIfInNodeBuffer(edgesIn,nodesIn,allNodes=0,idxStart=0):
     i = 10000000+10000000
     while i<np.max([nodes.index.max(),edges.index.max()]):
         i*=10
+        if i>100000000000000000000:
+            print(xxx)
     newedgeidx = int(i) 
     newnodeidx = int(i)
     counterSIPT = 0

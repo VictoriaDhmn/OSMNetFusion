@@ -43,25 +43,9 @@ import os
 # import warnings
 # warnings.filterwarnings("ignore", category=DeprecationWarning, message=".*np.find_common_type.*")
 
-# load all values in configFile.py
-import configFile 
-
-# VALUES #############################################################################
-
-network = configFile.p1_result_filepath
-signals_fp = configFile.signals_filepath
-cyclePathW_fp = configFile.cycle_path_w_filepath
-bikeAmenities_fp = configFile.bike_amenities_filepath
-elev_fp = configFile.elev_filepath
-greenLanduse_fp = configFile.green_landuse_filepath
-retail_fp = configFile.retail_filepath
-building_fp = configFile.building_filepath
-ptStops_fp = configFile.pt_stops_filepath
-p2_result_fp = configFile.p2_result_filepath
-
 # FUNCTIONS ##################################################################################
 
-def get_landuse_ratio(gdf_edges, kind='retail', input_file=retail_fp):
+def get_landuse_ratio(gdf_edges, kind='retail', input_file=None):
     """
     Get the landuse ratio for the edges
     Args:
@@ -370,7 +354,7 @@ def merge_similar_columns(gdf_edges, column1, column2, newName=None):
     
     return gdf_edges
 
-def add_elevation(gdf_nodes,input_file=elev_fp):
+def add_elevation(gdf_nodes, input_file):
     """
     Add elevation to the nodes
     Args:
@@ -380,7 +364,10 @@ def add_elevation(gdf_nodes,input_file=elev_fp):
         @gdf_nodes: geopandas.GeoDataFrame, nodes with elevation
     """
     if not os.path.isfile(input_file):
-        raise ValueError('Input file {} containing accidents doesn''t exist.'.format(input_file))
+        print('Input file {} containing elevation doesn''t exist.'.format(input_file))
+        gdf_nodes['elevation'] = None
+        return gdf_nodes, False
+    
     with open(input_file, 'r') as fp:
         # Open json with elevation data
         elevations = eval(fp.readline())
@@ -391,9 +378,9 @@ def add_elevation(gdf_nodes,input_file=elev_fp):
 
     rows_added = len(elevations)  # gdf_nodes['elevations'].count(axis=1)
     print(f'Added elevation to {rows_added} rows')
-    return gdf_nodes
+    return gdf_nodes, True
 
-def add_gradient(gdf_nodes, gdf_edges):
+def add_gradient(gdf_nodes, gdf_edges, elev_fp):
     """
     calculates severity of slope from gradient
     Args:
@@ -404,7 +391,12 @@ def add_gradient(gdf_nodes, gdf_edges):
         @gdf_edges: geopandas.GeoDataFrame, edges with gradient and severity
     """
     # get elevation
-    gdf_nodes = add_elevation(gdf_nodes=gdf_nodes)
+    gdf_nodes, elevAdded = add_elevation(gdf_nodes, elev_fp)
+    if not elevAdded:
+        gdf_edges['height_difference'] = None
+        gdf_edges['gradient'] = None
+        gdf_edges['severity'] = None
+        return gdf_nodes, gdf_edges
 
     for edge in gdf_edges.itertuples():
         height1 = gdf_nodes.loc[gdf_nodes['osmid'] == edge[1], 'elevation'].values[0]
@@ -422,7 +414,7 @@ def add_gradient(gdf_nodes, gdf_edges):
         gdf_edges.loc[edge.Index, 'severity'] = round(severity, 4)
     return gdf_nodes, gdf_edges
 
-def add_traffic_lights(gdf_nodes, input_file=signals_fp):
+def add_traffic_lights(gdf_nodes, input_file):
     """
     Add traffic lights to the nodes
     Args:
@@ -469,7 +461,7 @@ def add_traffic_lights(gdf_nodes, input_file=signals_fp):
     
     return gdf_nodes
 
-def add_cycle_path_width(gdf_edges, input_file=cyclePathW_fp):
+def add_cycle_path_width(gdf_edges, input_file):
     """
     Add cycle path width to the edges
     Args:
@@ -480,7 +472,9 @@ def add_cycle_path_width(gdf_edges, input_file=cyclePathW_fp):
     """
     # Open csv with cycle path widths data
     if not os.path.isfile(input_file):
-        raise ValueError('Input file {} containing cycle path widths data doesn''t exist.'.format(input_file))
+        print('Input file {} containing cycle path widths data doesn''t exist.'.format(input_file))
+        gdf_edges['width_cycle_path'] = None
+        return gdf_edges
     widths_df = pd.read_csv(input_file)  # columns=['osmid','width','distances','location']
     if widths_df.shape[0] == 0:
         raise ValueError('cycle path widths file is empty')
@@ -491,7 +485,7 @@ def add_cycle_path_width(gdf_edges, input_file=cyclePathW_fp):
     gdf_edges = gdf_edges.merge(widths_df, on='osmid', how='left')
     return gdf_edges
 
-def add_bicycle_parking(gdf_edges, input_file=bikeAmenities_fp):
+def add_bicycle_parking(gdf_edges, input_file):
     """
     Add bicycle parking to the edges
     Args:
@@ -503,7 +497,11 @@ def add_bicycle_parking(gdf_edges, input_file=bikeAmenities_fp):
     # 4mins --> 1.5% --> 4-5hrs for all
     amenity_dist_lim = 200  # meters
     if not os.path.isfile(input_file):
-        raise ValueError('Input file {} containing bicycle parking data doesn''t exist.'.format(input_file))
+        print('Input file {} containing bicycle parking data doesn''t exist.'.format(input_file))
+        gdf_edges['amenity_on'] = ''
+        gdf_edges['amenity_nearby'] = ''
+        return gdf_edges
+    
     gdf_cycle_parking = gpd.read_file(input_file, driver="GPKG")  # , layer='accidents'
     if gdf_cycle_parking.shape[0] == 0:
         raise ValueError('bicycle parking file is empty')
@@ -551,7 +549,7 @@ def add_bicycle_parking(gdf_edges, input_file=bikeAmenities_fp):
     print(f'{has_nodes_nearby_count} nodes have at lest 1 node within {amenity_dist_lim}m')
     return gdf_edges
 
-def add_pt_stops(gdf_edges, input_file=ptStops_fp):
+def add_pt_stops(gdf_edges, input_file):
     """
     Add public transport stops to the edges
     Args:
@@ -563,9 +561,15 @@ def add_pt_stops(gdf_edges, input_file=ptStops_fp):
             - pt_stop_count: number of public transport stops on the edge
             - pt_stop_routes: names of the public transport stops on the edge
     """
+    # TEST
     # use the 'Point' layer of the public transport data
     if not os.path.isfile(input_file):
-        raise ValueError('Input file {} containing public transport data doesn''t exist.'.format(input_file))
+        print('Input file {} containing public transport data doesn''t exist.'.format(input_file))
+        gdf_edges['pt_stop_on'] = 0
+        gdf_edges['pt_stop_count'] = 0
+        gdf_edges['pt_stop_routes'] = ''
+        return gdf_edges
+    
     gdf_pt_stops = gpd.read_file(input_file, driver="GPKG", layer='Point')
     if gdf_pt_stops.shape[0] == 0:
         raise ValueError('public transport stops file is empty')
@@ -665,7 +669,7 @@ def add_missing_columns(gdf_nodes, gdf_edges):
     # EDGES
     cols = ['sidewalk', 'cycleway', 'bicycle_road', 'oneway:bicycle', 'cycleway:right', 'cycleway:left', \
             'cycleway:both', 'cycleway:right:lane', 'cycleway:left:lane', 'ramp:bicycle', 'public_transport', \
-            'cycleway:surface', 'cycleway:width', 'crossing', 'width', 'smoothness']
+            'cycleway:surface', 'cycleway:width', 'crossing', 'width', 'smoothness', 'gradient', 'elevation', 'height_difference', 'severity']
     for c in cols:
         if c not in gdf_edges.columns:
             gdf_edges[c] = ''
@@ -673,7 +677,7 @@ def add_missing_columns(gdf_nodes, gdf_edges):
     
     return gdf_nodes, gdf_edges
 
-def save_p2_result_2_file(gdf_nodes, gdf_edges, output_file=p2_result_fp):
+def save_p2_result_2_file(gdf_nodes, gdf_edges, output_file):
     """
     Save the nodes and edges to a geopackage file
     Args:
@@ -691,8 +695,18 @@ def save_p2_result_2_file(gdf_nodes, gdf_edges, output_file=p2_result_fp):
     ox.save_graph_geopackage(graph, directed=True, filepath=output_file)
     print(f'Graph saved to {output_file}')
 
-def main(public_transport=True, accidents=True, cycle_path_width=True):
-    
+def main(configFile, public_transport=True, accidents=True, cycle_path_width=True):
+    network = configFile.p1_result_filepath
+    signals_fp = configFile.signals_filepath
+    cyclePathW_fp = configFile.cycle_path_w_filepath
+    bikeAmenities_fp = configFile.bike_amenities_filepath
+    elev_fp = configFile.elev_filepath
+    greenLanduse_fp = configFile.green_landuse_filepath
+    retail_fp = configFile.retail_filepath
+    building_fp = configFile.building_filepath
+    ptStops_fp = configFile.pt_stops_filepath
+    p2_result_fp = configFile.p2_result_filepath
+
     # load base network
     gdf_edges = gpd.read_file(network, layer='edges')
     gdf_nodes = gpd.read_file(network, layer='nodes')
@@ -706,7 +720,7 @@ def main(public_transport=True, accidents=True, cycle_path_width=True):
     # clean data and add some information
     gdf_edges = improve_bike_edges(gdf_edges)
     gdf_edges = add_cycle_paths(gdf_edges)
-    gdf_nodes, gdf_edges = add_gradient(gdf_nodes, gdf_edges)
+    gdf_nodes, gdf_edges = add_gradient(gdf_nodes, gdf_edges, elev_fp)
     
     # merge similar columns
     gdf_edges = merge_similar_columns(gdf_edges, 'surface', '_30', newName='surface')
@@ -714,12 +728,12 @@ def main(public_transport=True, accidents=True, cycle_path_width=True):
     gdf_edges = merge_similar_columns(gdf_edges, 'smoothness', '_36', newName='width')
 
     # add additional information
-    gdf_nodes = add_traffic_lights(gdf_nodes)
+    gdf_nodes = add_traffic_lights(gdf_nodes, signals_fp)
     if cycle_path_width: # manual input file
-        gdf_edges = add_cycle_path_width(gdf_edges)
-    gdf_edges = add_bicycle_parking(gdf_edges)
+        gdf_edges = add_cycle_path_width(gdf_edges, cyclePathW_fp)
+    gdf_edges = add_bicycle_parking(gdf_edges, input_file=bikeAmenities_fp)
     if public_transport:
-        gdf_edges = add_pt_stops(gdf_edges)
+        gdf_edges = add_pt_stops(gdf_edges, input_file=ptStops_fp)
     else:
         gdf_edges['pt_stop_on'] = ''
         gdf_edges['pt_stop_count'] = ''
@@ -730,7 +744,7 @@ def main(public_transport=True, accidents=True, cycle_path_width=True):
     gdf_nodes, gdf_edges = add_missing_columns(gdf_nodes, gdf_edges)
 
     # save result
-    save_p2_result_2_file(gdf_nodes, gdf_edges)
+    save_p2_result_2_file(gdf_nodes, gdf_edges, output_file=p2_result_fp)
 
 if __name__ == "__main__":
     main(accidents=False, cycle_path_width=False)

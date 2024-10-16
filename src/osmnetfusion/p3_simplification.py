@@ -35,7 +35,10 @@ import time
 import sys
 import os
 sys.path.append(os.getcwd())
-from p3_functions import *
+try: 
+    from .p3_functions import * # if package
+except:
+    from p3_functions import * # when running runSimplification.py directly
 
 import warnings
 warnings.filterwarnings("ignore", message=".*'GeoDataFrame.swapaxes' is deprecated and will be removed in a future version.*", category=FutureWarning)
@@ -44,9 +47,6 @@ warnings.filterwarnings("ignore", message=".*'GeoDataFrame.swapaxes' is deprecat
 import os
 os.environ['USE_PYGEOS'] = '0'
 pd.set_option('future.no_silent_downcasting', True)
-
-# load all values in configFile.py
-import configFile
 
 ############################################
 # CONTENT
@@ -80,23 +80,27 @@ import configFile
 # NETWORK SIMPLIFICATION
 ############################################
 
-CFvisualize = configFile.visualize
-CFplot_bounds = configFile.plot_bounds
-CFcrs = configFile.crs
-CFparallelized = configFile.parallelized
-CFp2_result_filepath = configFile.p2_result_filepath
-CFmaxAngleInitial = configFile.maxAngleInitial
-CFmaxAnglePrev = configFile.maxAnglePrev
-CFhighwayRanking = configFile.HIGHWAY_RANKING
-CFhighwayBuffers1 = configFile.HIGHWAY_BUFFERS_1
-CFhighwayBuffers2 = configFile.HIGHWAY_BUFFERS_2
-CFclusterThreshold = configFile.clusterThreshold
-CFgeom_col = configFile.geom_col
-CFversion = configFile.version
-# CFp3_result_filepath = configFile.p3_result_filepath
-CFp3_result_filepath_gpkg = configFile.p3_result_filepath_gpkg
+def main(configFile=None):
 
-def main():
+    if configFile is None:
+        import configFile # when running this script manually
+
+    CFvisualize = configFile.visualize
+    CFplot_bounds = configFile.plot_bounds
+    CFcrs = configFile.crs
+    CFparallelized = configFile.parallelized
+    CFp2_result_filepath = configFile.p2_result_filepath
+    CFmaxAngleInitial = configFile.maxAngleInitial
+    CFmaxAnglePrev = configFile.maxAnglePrev
+    CFhighwayRanking = configFile.HIGHWAY_RANKING
+    CFhighwayBuffers1 = configFile.HIGHWAY_BUFFERS_1
+    CFhighwayBuffers2 = configFile.HIGHWAY_BUFFERS_2
+    CFclusterThreshold = configFile.clusterThreshold
+    CFgeom_col = configFile.geom_col
+    CFversion = configFile.version
+    # CFp3_result_filepath = configFile.p3_result_filepath
+    CFp3_result_filepath_gpkg = configFile.p3_result_filepath_gpkg
+
     ############################################
     # 0. Preparation - INPUTS & PARAMETERS
     startX = time.time()

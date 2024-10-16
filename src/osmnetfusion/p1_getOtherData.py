@@ -21,15 +21,6 @@ import re
 import os
 import os.path
 
-# load all values in configFile.py
-import configFile 
-
-# VALUES #############################################################################
-version = configFile.version
-city = configFile.city_info['city']
-p1_result_fp = configFile.p1_result_filepath
-elev_fp = configFile.elev_filepath
-
 # FUNCTIONS #############################################################################
 
 def get_elevation(location):
@@ -48,8 +39,7 @@ def get_elevation(location):
         return r.json()['results']
     return []
 
-def generate_elevation_file(input_file=p1_result_fp,
-                            output_file=elev_fp):
+def generate_elevation_file(input_file, output_file):
     """
     Extracts elevation data from Open Elevation API
     Args:
@@ -89,9 +79,14 @@ def generate_elevation_file(input_file=p1_result_fp,
     print("{} rows of elevation data written to file {}".format(len(a), output_file))
 
 
-def main(elevation=True):
+def main(configFile, elevation=True):
+    version = configFile.version
+    city = configFile.city_info['city']
+    p1_result_fp = configFile.p1_result_filepath
+    elev_fp = configFile.elev_filepath
+
     if elevation:
-        generate_elevation_file()
+        generate_elevation_file(input_file=p1_result_fp, output_file=elev_fp)
     
 if __name__ == "__main__":
     main()

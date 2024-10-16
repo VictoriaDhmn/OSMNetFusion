@@ -4,6 +4,8 @@
 # ADJUST LOCATION --------------------------------------------------------
 # ------------------------------------------------------------------------
 
+# PLEASE ADJUST THE BELOW VARIABLES 
+
 # 1. FOR VERSION CONTROL
 version = 'Munich_TEST' 
 
@@ -23,7 +25,7 @@ else:
 # Select 'place' or 'coordinates'
 boundary_mode = 'place'
 if boundary_mode == 'place':
-    location = f'{city_info["city_OSM"]}, {city_info["country"]}'  # 'Auckland, New Zealand'
+    location = f'{city_info["city_OSM"]}, {city_info["country"]}' 
     dist_in_meters = 1500 # Radius in meters
 else:
     coords_upper_left = 48.15847740556768, 11.556108918739799 
@@ -32,16 +34,17 @@ else:
 # Only set this to True if the PT stops/routes cannot be retrieved with the OSM API
 manual_OSM_PT_query = False
 
+# Use 'network_data' when using the package approach 
+# When manually running runSimplification.py, use '../../network_data/'
+network_data_dir = 'network_data/'  
+regional_data_dir = 'regional_data/'
+
 # ------------------------------------------------------------------------
 # ONLY ADJUST THE BELOW WHEN NECESSARY -----------------------------------
 # ------------------------------------------------------------------------
 
 # Place information used for OSM queries
 place = {"city": city_info['city'], "country": city_info['country']}
-
-# if necessary, adjust the directory of the network / regional data
-network_data_dir = '../../network_data/'
-regional_data_dir = '../../regional_data/'
 
 # p1_getOSMNetwork.py
 p1_result_filepath = network_data_dir + f"{version}/p1_{version}_osmnx.gpkg"

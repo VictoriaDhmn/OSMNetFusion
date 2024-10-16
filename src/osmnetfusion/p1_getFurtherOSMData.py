@@ -50,35 +50,6 @@ import matplotlib.pyplot as plt
 import contextily as ctx
 import osmium
 
-# load all values in configFile.py
-import configFile
-
-# VALUES #############################################################################
-
-city_OSM = configFile.city_info['city_OSM']
-place = configFile.place
-stops_tags = configFile.pt_stops_tags
-stops_cols = configFile.pt_stops_cols
-stops_fp = configFile.pt_stops_filepath
-manual_OSM_query = None
-if configFile.manual_OSM_PT_query:
-    manual_OSM_query = configFile.manual_OSM_query_fp
-amenities_tags = configFile.bike_amenities_tags
-amenities_cols = configFile.bike_amenities_cols
-amenities_fp = configFile.bike_amenities_filepath
-buildings_tags = configFile.building_tags
-buildings_cols = configFile.building_cols
-buildings_fp = configFile.building_filepath
-green_landuse_tags = configFile.green_landuse_tags
-green_landuse_cols = configFile.green_landuse_cols
-green_landuse_fp = configFile.green_landuse_filepath
-retail_tags = configFile.retail_tags
-retail_cols = configFile.retail_cols
-retail_fp = configFile.retail_filepath
-signals_tags = configFile.signals_tags
-signals_cols = configFile.signals_cols
-signals_fp = configFile.signals_filepath
-
 # FUNCTIONS ##################################################################################
 
 def get_city_boundary(place):
@@ -101,7 +72,7 @@ def get_city_boundary(place):
     boundary = sh.geometry.box(*boundary.total_bounds)
     return boundary 
 
-def generate_pt_stops_and_route_file(place=city_OSM, manual_query=manual_OSM_query, output_file_stops=stops_fp):
+def generate_pt_stops_and_route_file(place, manual_query, output_file_stops):
     """
     Generates files with info on public transport routes and stops.
     Args:
@@ -307,13 +278,37 @@ def generate_objects_file(place, output_file, tags, cols=None, objects='objects'
         gdf[gdf.geom_type == geomtype].to_file(output_file, driver="GPKG", layer=geomtype)
     print("{} rows of data regarding {} written to file {}".format(gdf.shape[0], objects, output_file))
 
-def main(ptstops=True, amenities=True, buildings=True, landuse=True, retail=True, signals=True):
+def main(configFile, ptstops=True, amenities=True, buildings=True, landuse=True, retail=True, signals=True):
+    city_OSM = configFile.city_info['city_OSM']
+    place = configFile.place
+    stops_tags = configFile.pt_stops_tags
+    stops_cols = configFile.pt_stops_cols
+    stops_fp = configFile.pt_stops_filepath
+    manual_OSM_query = None
+    if configFile.manual_OSM_PT_query:
+        manual_OSM_query = configFile.manual_OSM_query_fp
+    amenities_tags = configFile.bike_amenities_tags
+    amenities_cols = configFile.bike_amenities_cols
+    amenities_fp = configFile.bike_amenities_filepath
+    buildings_tags = configFile.building_tags
+    buildings_cols = configFile.building_cols
+    buildings_fp = configFile.building_filepath
+    green_landuse_tags = configFile.green_landuse_tags
+    green_landuse_cols = configFile.green_landuse_cols
+    green_landuse_fp = configFile.green_landuse_filepath
+    retail_tags = configFile.retail_tags
+    retail_cols = configFile.retail_cols
+    retail_fp = configFile.retail_filepath
+    signals_tags = configFile.signals_tags
+    signals_cols = configFile.signals_cols
+    signals_fp = configFile.signals_filepath
+    
     import os
     output_directory = os.path.dirname(stops_fp)
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
     if ptstops:
-        generate_pt_stops_and_route_file()
+        generate_pt_stops_and_route_file(place=city_OSM, manual_query=manual_OSM_query, output_file_stops=stops_fp)
     if amenities:
         generate_objects_file(place, amenities_fp, amenities_tags, cols=amenities_cols, objects='bike_amenities')
     if buildings:

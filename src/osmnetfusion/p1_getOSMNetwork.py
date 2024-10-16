@@ -27,25 +27,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import contextily as ctx
 
-# load all values in configFile.py
-import configFile
-
-# VALUES #############################################################################
-
-version = configFile.version
-boundary_mode = configFile.boundary_mode
-if boundary_mode == 'place':
-    location = configFile.location
-    dist_in_meters = configFile.dist_in_meters
-else:
-    coords_upper_left = configFile.coords_upper_left
-    coords_lower_right = configFile.coords_lower_right
-used_tags = configFile.used_tags
-p1_result_fp = configFile.p1_result_filepath
-
 # FUNCTIONS ###################################################################################
 
-def getOSMGraph_place(location=location, distance=dist_in_meters, tags=used_tags):
+def getOSMGraph_place(location, distance, tags):
     """
     Downloads the street network - using place name
     Args:
@@ -68,7 +52,7 @@ def getOSMGraph_place(location=location, distance=dist_in_meters, tags=used_tags
     gdf_nodes, gdf_edges = ox.graph_to_gdfs(graph, nodes=True, edges=True, node_geometry=True, fill_edge_geometry=True)
     return graph, gdf_nodes, gdf_edges
 
-def getOSMGraph_coords(coords_upper_left, coords_lower_right, tags=used_tags):
+def getOSMGraph_coords(coords_upper_left, coords_lower_right, tags):
     """
     Downloads the street network - using bounding box, i.e., coordinates
     Args:
@@ -112,13 +96,24 @@ def make_plot(edgeGeometries, nodes, edgeColor='black', title=None):
     ctx.add_basemap(ax, crs='EPSG:4326', source=ctx.providers.OpenStreetMap.Mapnik)
     plt.show()
 
-def main():
+def main(configFile):
+    version = configFile.version
+    boundary_mode = configFile.boundary_mode
+    if boundary_mode == 'place':
+        location = configFile.location
+        dist_in_meters = configFile.dist_in_meters
+    else:
+        coords_upper_left = configFile.coords_upper_left
+        coords_lower_right = configFile.coords_lower_right
+    used_tags = configFile.used_tags
+    p1_result_fp = configFile.p1_result_filepath
+
     if boundary_mode == 'place':
         print(f"Getting OSM data for {location} with a radius of {dist_in_meters}m")
-        graph, gdf_nodes, gdf_edges = getOSMGraph_place()
+        graph, gdf_nodes, gdf_edges = getOSMGraph_place(location=location, distance=dist_in_meters, tags=used_tags)
     else:
         print(f"Getting OSM data for the area defined by the coordinates {np.round(coords_upper_left,3)} and {np.round(coords_lower_right,3)}")
-        graph, gdf_nodes, gdf_edges = getOSMGraph_coords(coords_upper_left, coords_lower_right)
+        graph, gdf_nodes, gdf_edges = getOSMGraph_coords(coords_upper_left, coords_lower_right, used_tags)
     make_plot(gdf_edges.geometry, gdf_nodes)
     # save as one geopackage file
     ox.save_graph_geopackage(graph, directed=True, filepath=p1_result_fp)
