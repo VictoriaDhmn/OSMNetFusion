@@ -20,7 +20,7 @@ setup(
         'Requests==2.32.3',
         'scikit_learn==1.5.2',
         'scipy==1.14.1',
-        'setuptools==63.2.0',
+        'setuptools==75.2.0',
         'Shapely==2.0.6',
     ],
     entry_points={
