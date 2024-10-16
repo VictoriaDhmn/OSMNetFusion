@@ -57,11 +57,9 @@ This is an example of the intial network (dark blue) and the resulting network (
 
 1. Clone the repository.
 2. Set the location in `configFile` (or use the default location). If necessary, modify other parameters or file paths.
-3. Run `runSimplification.py` in an IDE (or otherwise). Comment out individual steps if needed.
+3. **EITHER**: See `Example_code.ipynb` on how to use this tool as a **package**. **OR**: Run `runSimplification.py` in an IDE (or otherwise). 
 
-See the **bottom** of this file for how to use this tool as a **package**. This is still work in progress though!
-
-Runtime: approx. 10-20mins for a 16km2 area, if all steps are executed. As the steps build on each other, `p3_simplification` may be executed standalone, yet if `p1_getFurtherOSMData` is altered, the subsequent steps must be rerun. 
+Runtime: approx. 10-20mins for a 9km2 area, if all steps are executed. As the steps build on each other, `p3_simplification` may be executed standalone, yet if `p1_getFurtherOSMData` is altered, the subsequent steps must be rerun. 
 In `runSimplification:main`:
 ``` python
     p1_getOSMNetwork.main()
@@ -222,51 +220,6 @@ Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos
 - `?` RemoveDeg2Nodes?
 - `?` Implement calculating cycle path width (optionally) using a .shp file
 - `?` More classes / refactor
-
-## Use as a package (in progress)
-
-_TODO: improve customization options and adjusting the location_
-
-Build locally by running the following commands from the overarching `OSMNetFusion` folder:
-``` 
-python setup.py sdist bdist_wheel
-pip install . 
-```
-
-In your python script, import the package as: 
-```
-from osmnetfusion.runSimplification import runSimplification
-import osmnetfusion.configFile as configFile
-
-# 1. FOR VERSION CONTROL
-configFile.version = 'Munich_TEST'
-
-# 2. FOR QUERYING OSM DATA
-# Assign city and country values using a predefined city or custom input
-print('Available predefined cities: ', configFile.city_dict.keys())
-configFile.predefined_city = True
-if configFile.predefined_city:
-    configFile.city_info = configFile.city_dict['Munich']
-else:
-    configFile.city_info = {'city': 'Munich', 'country': 'Germany', 'city_OSM': 'München'}  
-
-# 3. FOR SETTING THE NETWORK BOUNDARIES
-# Select 'place' or 'coordinates'
-configFile.boundary_mode = 'place'
-if configFile.boundary_mode == 'place':
-    configFile.location = f'{configFile.city_info["city_OSM"]}, {configFile.city_info["country"]}'
-    configFile.dist_in_meters = 1500 # Radius in meters
-else:
-    configFile.coords_upper_left = 48.15847740556768, 11.556108918739799 
-    configFile.coords_lower_right = 48.152471559463216, 11.567313793292625
-
-# Only set this to True if the PT stops/routes cannot be retrieved with the OSM API, i.e., you receive an error message
-configFile.manual_OSM_PT_query = False
-
-# THEN
-runSimplification()
-print('The network data has been saved in the folder: network_data/', configFile.version)
-```
 
 
 
