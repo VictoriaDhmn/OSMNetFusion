@@ -7,7 +7,7 @@
 # PLEASE ADJUST THE BELOW VARIABLES 
 
 # 1. FOR VERSION CONTROL
-version = 'Frankfurt' 
+version = 'Munich_TEST' 
 
 # 2. FOR QUERYING OSM DATA 
 # Assign city and country values using a predefined city or custom input
@@ -19,7 +19,7 @@ city_dict = {   'Munich': {'city': 'Munich', 'country': 'Germany', 'city_OSM': '
                 'Freiburg': {'city': 'Freiburg', 'country': 'Germany', 'city_OSM': 'Freiburg im Breisgau'} }
 predefined_city = True
 if predefined_city:
-    city_info = city_dict['Freiburg']
+    city_info = city_dict['Munich']
 else:
     city_info = {'city': 'Munich', 'country': 'Germany', 'city_OSM': 'München'}  
 
