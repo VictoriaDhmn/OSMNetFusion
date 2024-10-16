@@ -366,6 +366,7 @@ def add_elevation(gdf_nodes, input_file):
     if not os.path.isfile(input_file):
         print('Input file {} containing elevation doesn''t exist.'.format(input_file))
         gdf_nodes['elevation'] = None
+        # gdf_nodes['elevation'] = gdf_nodes['elevation'].fillna('')
         return gdf_nodes, False
     
     with open(input_file, 'r') as fp:
@@ -392,10 +393,13 @@ def add_gradient(gdf_nodes, gdf_edges, elev_fp):
     """
     # get elevation
     gdf_nodes, elevAdded = add_elevation(gdf_nodes, elev_fp)
-    if not elevAdded:
+    if elevAdded==False:
         gdf_edges['height_difference'] = None
         gdf_edges['gradient'] = None
         gdf_edges['severity'] = None
+        # gdf_edges['height_difference'] = gdf_edges['height_difference'].fillna('')
+        # gdf_edges['gradient'] = gdf_edges['gradient'].fillna('')
+        # gdf_edges['severity'] = gdf_edges['severity'].fillna('')
         return gdf_nodes, gdf_edges
 
     for edge in gdf_edges.itertuples():
@@ -690,12 +694,13 @@ def save_p2_result_2_file(gdf_nodes, gdf_edges, output_file):
     gdf_edges['key'] = gdf_edges['key'].astype(int)
     gdf_edges2 = gdf_edges.set_index(['u', 'v', 'key'])
     assert gdf_nodes2.index.is_unique and gdf_edges2.index.is_unique
-    graph_attrs = {'created_with': 'OSMnx 1.2.2', 'crs': 'epsg:4326', 'simplified': True}
-    graph = ox.graph_from_gdfs(gdf_nodes2, gdf_edges2, graph_attrs)
+    # graph_attrs = {'created_with': 'OSMnx 1.2.2', 'crs': 'epsg:4326', 'simplified': True}
+    # TODO: NOTE: gradient missing in gpkg when empty --> bc empty columns saved to the gpkg?
+    graph = ox.graph_from_gdfs(gdf_nodes2, gdf_edges2) # , graph_attrs
     ox.save_graph_geopackage(graph, directed=True, filepath=output_file)
     print(f'Graph saved to {output_file}')
 
-def main(configFile, public_transport=True, accidents=True, cycle_path_width=True):
+def main(configFile, public_transport=True, accidents=True, cycle_path_width=True, elevation=True):
     network = configFile.p1_result_filepath
     signals_fp = configFile.signals_filepath
     cyclePathW_fp = configFile.cycle_path_w_filepath
@@ -720,8 +725,9 @@ def main(configFile, public_transport=True, accidents=True, cycle_path_width=Tru
     # clean data and add some information
     gdf_edges = improve_bike_edges(gdf_edges)
     gdf_edges = add_cycle_paths(gdf_edges)
-    gdf_nodes, gdf_edges = add_gradient(gdf_nodes, gdf_edges, elev_fp)
-    
+    if elevation:
+        gdf_nodes, gdf_edges = add_gradient(gdf_nodes, gdf_edges, elev_fp)
+
     # merge similar columns
     gdf_edges = merge_similar_columns(gdf_edges, 'surface', '_30', newName='surface')
     gdf_edges = merge_similar_columns(gdf_edges, 'smoothness', '_40', newName='smoothness')
@@ -745,6 +751,8 @@ def main(configFile, public_transport=True, accidents=True, cycle_path_width=Tru
 
     # save result
     save_p2_result_2_file(gdf_nodes, gdf_edges, output_file=p2_result_fp)
+
+
 
 if __name__ == "__main__":
     main(accidents=False, cycle_path_width=False)
