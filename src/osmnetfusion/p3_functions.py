@@ -1370,8 +1370,8 @@ class Node():
         self.geometry = mainRow.geom_merged
         # self.crossing = [x for x in self.df.highway.explode().unique() if ((x!='') & (x==x) & (x is not None))]
         self.infra = list(set( listify(self.df.highway) + listify(self.df.crossing) ))
-        self.crossing = 1 if 'crossing' in self.infra else 0
-        self.traffic_signals = 1 if 'traffic_signals' in self.infra else 0
+        self.crossing = True if 'crossing' in self.infra else False
+        self.traffic_signals = True if 'traffic_signals' in self.infra else False
         
         self.l_id = listify(self.df.osmid,asInt=True)
         self.l_osmid = listify(self.df.old_osmid,asInt=True) if (len(self.df.old_osmid.dropna().unique())>0) else None
