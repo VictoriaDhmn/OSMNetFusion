@@ -29,7 +29,7 @@ import contextily as ctx
 
 # FUNCTIONS ###################################################################################
 
-def getOSMGraph_place(location, distance, tags, custom_OSM_date=None):
+def getOSMGraph_place(location, distance, tags):
     """
     Downloads the street network - using place name
     Args:
@@ -47,13 +47,12 @@ def getOSMGraph_place(location, distance, tags, custom_OSM_date=None):
     graph = ox.graph_from_address(location, dist=distance, dist_type='bbox',
                                   network_type='all',
                                   simplify=True, retain_all=False, truncate_by_edge=False,
-                                  custom_filter=None,
-                                  date=custom_OSM_date)
+                                  custom_filter=None)
 
     gdf_nodes, gdf_edges = ox.graph_to_gdfs(graph, nodes=True, edges=True, node_geometry=True, fill_edge_geometry=True)
     return graph, gdf_nodes, gdf_edges
 
-def getOSMGraph_coords(coords_upper_left, coords_lower_right, tags, custom_OSM_date=None):
+def getOSMGraph_coords(coords_upper_left, coords_lower_right, tags):
     """
     Downloads the street network - using bounding box, i.e., coordinates
     Args:
@@ -71,8 +70,7 @@ def getOSMGraph_coords(coords_upper_left, coords_lower_right, tags, custom_OSM_d
     graph = ox.graph_from_bbox(west=coords_upper_left[1], south=coords_lower_right[0], east=coords_lower_right[1], north=coords_upper_left[0], 
                                network_type='all',
                                simplify=True, retain_all=False, truncate_by_edge=False, 
-                               custom_filter=None,
-                               date=custom_OSM_date)
+                               custom_filter=None)
 
     gdf_nodes, gdf_edges = ox.graph_to_gdfs(graph, nodes=True, edges=True, node_geometry=True, fill_edge_geometry=True)
     return graph, gdf_nodes, gdf_edges
@@ -102,6 +100,9 @@ def main(configFile):
     version = configFile.version
     boundary_mode = configFile.boundary_mode
     custom_OSM_date = configFile.custom_OSM_date
+    if custom_OSM_date:
+        ox.settings.overpass_settings = '[out:json][timeout:{timeout}][date:"' + custom_OSM_date + '"]{maxsize}'
+    
     if boundary_mode == 'place':
         location = configFile.location
         dist_in_meters = configFile.dist_in_meters
@@ -113,14 +114,17 @@ def main(configFile):
 
     if boundary_mode == 'place':
         print(f"Getting OSM data for {location} with a radius of {dist_in_meters}m")
-        graph, gdf_nodes, gdf_edges = getOSMGraph_place(location=location, distance=dist_in_meters, tags=used_tags, custom_OSM_date=custom_OSM_date)
+        graph, gdf_nodes, gdf_edges = getOSMGraph_place(location=location, distance=dist_in_meters, tags=used_tags)
     else:
         print(f"Getting OSM data for the area defined by the coordinates {np.round(coords_upper_left,3)} and {np.round(coords_lower_right,3)}")
-        graph, gdf_nodes, gdf_edges = getOSMGraph_coords(coords_upper_left, coords_lower_right, used_tags, custom_OSM_date=custom_OSM_date)
+        graph, gdf_nodes, gdf_edges = getOSMGraph_coords(coords_upper_left, coords_lower_right, used_tags)
     make_plot(gdf_edges.geometry, gdf_nodes)
     # save as one geopackage file
     ox.save_graph_geopackage(graph, directed=True, filepath=p1_result_fp)
     print(f"Saved graph to {p1_result_fp}")
+
+    # reset osmnx time settings
+    ox.settings.overpass_settings = '[out:json][timeout:{timeout}]{maxsize}'
 
 if __name__ == "__main__":
     main()
