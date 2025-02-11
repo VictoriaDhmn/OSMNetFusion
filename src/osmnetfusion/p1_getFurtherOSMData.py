@@ -233,7 +233,7 @@ def generate_pt_stops_and_route_file(place, manual_query, output_file_stops):
         gdf_stops[gdf_stops.geom_type == geom_type].to_file(output_file_stops, driver="GPKG", layer=geom_type)
     print("{} stops written to file {}".format(gdf_stops.shape[0], output_file_stops))
 
-def generate_landuse_file(place, output_file, tags, cols):
+def generate_landuse_file(place, output_file, tags, cols, date=None):
     """
     get OSM data regarding type of use of land
     Args:
@@ -242,7 +242,7 @@ def generate_landuse_file(place, output_file, tags, cols):
         @cols: list, columns to keep, e.g. ["name", "landuse", "geometry"]
     """
     # get all "landuse"
-    gdf_landuse = ox.features_from_place(place, tags)
+    gdf_landuse = ox.features_from_place(place, tags, date=date)
     
     # select useful columns that are available in gdf
     gdf_landuse = gdf_landuse[[x for x in cols if x in gdf_landuse.columns]]
@@ -255,7 +255,7 @@ def generate_landuse_file(place, output_file, tags, cols):
         gdf_landuse[gdf_landuse.geom_type == geomtype].to_file(output_file, driver="GPKG", layer=geomtype)
     print("{} rows of data regarding type of use of land written to file {}".format(gdf_landuse.shape[0], output_file))
 
-def generate_objects_file(place, output_file, tags, cols=None, objects='objects'):
+def generate_objects_file(place, output_file, tags, cols=None, objects='objects', date=None):
     """
     get OSM data regarding objects
     Args:
@@ -266,7 +266,7 @@ def generate_objects_file(place, output_file, tags, cols=None, objects='objects'
         @objects='objects': str, object class, e.g. "bike_amenities"
     """
     # get all objects
-    gdf = ox.features_from_place(place, tags)
+    gdf = ox.features_from_place(place, tags, date=date)
     
     # select useful columns that are available in gdf
     if cols is not None:
@@ -281,6 +281,8 @@ def generate_objects_file(place, output_file, tags, cols=None, objects='objects'
 def main(configFile, ptstops=True, amenities=True, buildings=True, landuse=True, retail=True, signals=True):
     city_OSM = configFile.city_info['city_OSM']
     place = configFile.place
+    custom_OSM_date = configFile.custom_OSM_date
+
     stops_tags = configFile.pt_stops_tags
     stops_cols = configFile.pt_stops_cols
     stops_fp = configFile.pt_stops_filepath
@@ -310,15 +312,15 @@ def main(configFile, ptstops=True, amenities=True, buildings=True, landuse=True,
     if ptstops:
         generate_pt_stops_and_route_file(place=city_OSM, manual_query=manual_OSM_query, output_file_stops=stops_fp)
     if amenities:
-        generate_objects_file(place, amenities_fp, amenities_tags, cols=amenities_cols, objects='bike_amenities')
+        generate_objects_file(place, amenities_fp, amenities_tags, cols=amenities_cols, objects='bike_amenities', date=custom_OSM_date)
     if buildings:
-        generate_landuse_file(place, buildings_fp, buildings_tags, buildings_cols)
+        generate_landuse_file(place, buildings_fp, buildings_tags, buildings_cols, date=custom_OSM_date)
     if landuse:
-        generate_landuse_file(place, green_landuse_fp, green_landuse_tags, green_landuse_cols)
+        generate_landuse_file(place, green_landuse_fp, green_landuse_tags, green_landuse_cols, date=custom_OSM_date)
     if retail:
-        generate_landuse_file(place, retail_fp, retail_tags, retail_cols)
+        generate_landuse_file(place, retail_fp, retail_tags, retail_cols, date=custom_OSM_date)
     if signals:
-        generate_objects_file(place, signals_fp, signals_tags, cols=signals_cols, objects='traffic signals')
+        generate_objects_file(place, signals_fp, signals_tags, cols=signals_cols, objects='traffic signals', date=custom_OSM_date)
 
 if __name__ == "__main__":
     main()
