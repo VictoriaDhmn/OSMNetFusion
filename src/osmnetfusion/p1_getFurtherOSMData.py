@@ -317,16 +317,20 @@ def main(configFile, ptstops=True, amenities=True, buildings=True, landuse=True,
         generate_objects_file(place, amenities_fp, amenities_tags, cols=amenities_cols, objects='bike_amenities')
     if buildings:
         generate_landuse_file(place, buildings_fp, buildings_tags, buildings_cols)
-    if landuse:
-        generate_landuse_file(place, green_landuse_fp, green_landuse_tags, green_landuse_cols)
-    if retail:
-        generate_landuse_file(place, retail_fp, retail_tags, retail_cols)
     if signals:
         generate_objects_file(place, signals_fp, signals_tags, cols=signals_cols, objects='traffic signals')
 
     # reset osmnx time settings
     ox.settings.overpass_settings = '[out:json][timeout:{timeout}]{maxsize}'
-
+    
+    # the below don't support historical data - so use current data
+    if landuse:
+        generate_landuse_file(place, green_landuse_fp, green_landuse_tags, green_landuse_cols)
+    if retail:
+        generate_landuse_file(place, retail_fp, retail_tags, retail_cols)
+    
 if __name__ == "__main__":
     main()
 
+
+# %%
