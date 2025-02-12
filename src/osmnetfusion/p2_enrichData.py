@@ -483,7 +483,10 @@ def add_cycle_path_width(gdf_edges, input_file):
     if widths_df.shape[0] == 0:
         raise ValueError('cycle path widths file is empty')
 
-    widths_df.columns = ['osmid', 'width_cycle_path', 'distances', 'location']
+    if len(widths_df.columns) == 4:
+        widths_df.columns = ['osmid', 'width_cycle_path', 'distances', 'location']
+    else:
+        widths_df.columns = ['osmid', 'width_cycle_path']
     widths_df = widths_df[['osmid','width_cycle_path']].groupby('osmid').min().reset_index()  # .mean()
 
     gdf_edges = gdf_edges.merge(widths_df, on='osmid', how='left')
