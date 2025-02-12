@@ -20,6 +20,7 @@ import requests
 import re
 import os
 import os.path
+import time
 
 # FUNCTIONS #############################################################################
 
@@ -67,6 +68,7 @@ def generate_elevation_file(input_file, output_file):
             a.extend([{'idx': idx[c], 'elevation': tmp['elevation']} for c, tmp in enumerate(get_elevation(j))])
             j = []
             idx = []
+            time.sleep(1)
     a.extend([{'idx': idx[c], 'elevation': tmp['elevation']} for c, tmp in enumerate(get_elevation(j))])
     if len(a) == 0:
         raise ValueError('Missing elevation data')
