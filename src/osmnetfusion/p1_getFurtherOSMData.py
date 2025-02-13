@@ -138,12 +138,12 @@ def generate_pt_stops_and_route_file(place, manual_query, output_file_stops):
                     "mode": relation_mode,
                     "stop_type": member['role'],
                     "member_ref": member_ref,
-                    "name": tags["name"],
+                    "name": tags["name"] if "name" in tags.keys() else None,
                     "operator": tags["operator"] if "operator" in tags.keys() else None,
-                    "ref": tags["ref"],
+                    "ref": tags["ref"] if "ref" in tags.keys() else None,
                     "network": tags["network"] if "network" in tags.keys() else None,
-                    "from": tags["from"],
-                    "to": tags["to"],
+                    "from": tags["from"] if "from" in tags.keys() else None,
+                    "to": tags["to"] if "to" in tags.keys() else None,
                     "geometry": geometry,
                 })
     else:
@@ -164,6 +164,8 @@ def generate_pt_stops_and_route_file(place, manual_query, output_file_stops):
                     out skel qt;
                     """
                 result = api.query(query)
+            if len(result.relations) == 0:
+                raise Exception("No public transport routes found.")
             print("Relations: ", len(result.relations))
             stops = []
             for relation in result.relations:
@@ -201,7 +203,8 @@ def generate_pt_stops_and_route_file(place, manual_query, output_file_stops):
             print('2. Copy the following query and run it there:')
             print(query)
             print('Note: you might have to use admin_level 4 or 8 instead of 6.')
-            print('3. Download the data and save it here:', output_file_stops)
+            print("Note: alternatively, you can also select a boundary area, and remove ['name'='...'] from the query.")
+            print("3. Once you obtain results: Select 'Export'. Copy 'OSM Rohdaten'. Paste into an empty xml file and save as osmnx_PTStops_query.xml here:", output_file_stops)
             print('4. In configFile, set the manual_OSM_query=True.')
             print('5. Rerun this script.')
             print('##################################################')
