@@ -2,7 +2,7 @@
 
 ## Overview
 
-**OSMNetFusion**: A topologically simplified OSM network, enriched with additional (open!) data sources - designed to provide a streamlined, multimodal network. A.k.a. **OSMTopoMerge** or **OSM.STEM**: Simplified topology, enriched, multimodal. **The only input required is the location of interest.**
+**OSMNetFusion**: A **topologically-simplified** OSM network, where **tag-information** is preserved, enriched with additional (open!) data sources - designed to provide a streamlined, **multimodal** network. **The only input required is the location of interest.**
 
 - Idea
 - Input data
