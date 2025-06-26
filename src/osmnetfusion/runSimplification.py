@@ -10,7 +10,7 @@ os.environ['USE_PYGEOS'] = '0'
 
 def runSimplification(fp_config=None, 
                       run_getOSMNetwork=True, run_getFurtherOSMData=True, run_getOtherData=True, run_enrichData=True, run_simplification=True,
-                      ptstops=True, amenities=True, buildings=True, landuse=True, retail=True, signals=True, elevation=True, public_transport=False, cycle_path_width=False,
+                      ptstops=False, amenities=True, buildings=True, landuse=True, retail=True, signals=True, elevation=True, public_transport=False, cycle_path_width=False,
                       manual=False):
     
     # load configFile
