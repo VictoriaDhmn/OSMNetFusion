@@ -582,6 +582,7 @@ def reassignNodes(edges,mergeIdx):
     new_v_pts = mergeIdx.loc[edges.v,'geom_merged'].values
     mids = []
     for itr,row in edges.iterrows():
+        # mid = row.geometry.coords[:]
         if (row.u==row.new_u):
             mid = row.geometry.coords[1:]
         elif (row.v==row.new_v):
@@ -591,6 +592,32 @@ def reassignNodes(edges,mergeIdx):
         else:
             mid = row.geometry.coords[:]
         mids.append(mid)
+
+    ################################
+    # IDEA: only keep the points closest to new_u and new_v, and those in between
+    
+    # near_new_u = [sh.nearest_points(sh.geometry.Point(new_u_pts[i]),sh.geometry.LineString(mids[i]))[0] for i in range(len(edges))]
+    # near_new_v = [sh.nearest_points(sh.geometry.Point(new_v_pts[i]),sh.geometry.LineString(mids[i]))[0] for i in range(len(edges))]
+    # interpolate where the new_u and new_v points are on the line
+    # between the two points
+    # near_new_u = [sh.geometry.LineString([mids[i][0],mids[i][-1]]).interpolate(near_new_u[i].distance(sh.geometry.LineString([mids[i][0],mids[i][-1]]))) for i in range(len(edges))]
+    # near_new_v = [sh.geometry.LineString([mids[i][0],mids[i][-1]]).interpolate(near_new_v[i].distance(sh.geometry.LineString([mids[i][0],mids[i][-1]]))) for i in range(len(edges))]
+    # only keep the points in between near_new_u and near_new_v for each line in mids
+    
+    # find the coordinate (or index) in mids[i] that is closest to new_u_pts[i]
+    # and new_v_pts[i], and keep only those points in between --> mids[i][idx1:idx2+1]
+    near_new_u = [min(mids[i], key=lambda x: new_u_pts[i].distance(sh.geometry.Point(x))) for i in range(len(edges))]
+    near_new_v = [min(mids[i], key=lambda x: new_v_pts[i].distance(sh.geometry.Point(x))) for i in range(len(edges))]
+    idx1 = [mids[i].index(near_new_u[i]) for i in range(len(edges))]
+    idx2 = [mids[i].index(near_new_v[i]) for i in range(len(edges))]
+    
+    # keep only the points in between
+    print('Average len of mids:',np.mean([len(mids[i]) for i in range(len(edges))]))
+    mids = [mids[i][idx1[i]:idx2[i]+1] for i in range(len(edges))]
+    print('Average len of mids:',np.mean([len(mids[i]) for i in range(len(edges))]))
+    
+    #################################
+
     edges['geom_linear'] = [sh.geometry.LineString(new_u_pts[i].coords[:] + new_v_pts[i].coords[:]) for i in range(len(edges))]
     initReassigned = [sh.geometry.LineString(new_u_pts[i].coords[:] + mids[i] + new_v_pts[i].coords[:]) for i in range(len(edges))]
     reverseReassigned = [sh.geometry.LineString(new_u_pts[i].coords[:] + list(reversed(mids[i])) + new_v_pts[i].coords[:]) for i in range(len(edges))]
