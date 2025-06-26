@@ -2,7 +2,7 @@
 
 ## Overview
 
-**OSMNetFusion**: A topologically simplified OSM network, enriched with additional (open!) data sources - designed to provide a streamlined, multimodal network. A.k.a. **OSMTopoMerge** or **OSM.STEM**: Simplified topology, enriched, multimodal. **The only input required is the location of interest.**
+**OSMNetFusion**: A **topologically-simplified** OSM network, where **tag-information** is preserved, enriched with additional (open!) data sources - designed to provide a streamlined, **multimodal** network. **The only input required is the location of interest.**
 
 - Idea
 - Input data
@@ -44,7 +44,7 @@ This is an example of the intial network (dark blue) and the resulting network (
 - Each link is labelled based on its accessibility by foot, bike, motorized traffic (and public transport - in progress). This allows easy extraction of networks by mode of transport.
 
 **Note**: This approach is tailored to OSM data. The simplification should theoretically work for custom networks, but this has not been tested.   
-**Note**: The degree of simplification can be customized in `configFile`.  
+**Note**: The **degree of simplification** can be customized in `configFile`.  
 **Note**: Trajectory data can easily be map-matched to a mode-specific network using tools like [LeuvenMapMatching](https://github.com/wannesm/LeuvenMapMatching).  
 **Note**: The network can easily be mapped back to the initial OSM network using `l_osmid`.  
 
@@ -208,18 +208,12 @@ Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos
 
 - `X` p3: currently bike racks are missing on some links
 - `O` Reduce / fix the deprecation warnings
-- `O` Sort out whether/where to use '', np.nan, None 
-- `O` Match attribute information across UV and VU, e.g., if have cycleway:both, then add cycleway information to other edge
-- `O` Improve consistency of 'empty' attributes --> empty list or null?
-- `O` Double-check that reverse edges are added for all footways/paths for pedestrians
 - `O` Manually check output - look for bugs
 - `O` Consider street levels / tunnels / bridges
 - `O` p3: maybe add a more simplified bike path classification
-- `O` p3: add/keep node on links that are very non-linear i.e. curves/turns
-- `O` p3: maybe improve b_attributes and hence bicycle network
-- `?` RemoveDeg2Nodes?
+- `O` p3: add/keep additional node on links that are very non-linear i.e. curves/turns
+- `?` Entirely remove RemoveDeg2Nodes?
 - `?` Implement calculating cycle path width (optionally) using a .shp file
-- `?` More classes / refactor
 
 
 
