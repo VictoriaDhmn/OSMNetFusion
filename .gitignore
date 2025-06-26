@@ -15,7 +15,6 @@ regional_data/Munich/osmnx/osmnx_PTStops.gpkg
 # ignore entirely
 cache
 __pycache__
-tests
 X_input_data
 src/OSMNetFusion.egg-info
 build

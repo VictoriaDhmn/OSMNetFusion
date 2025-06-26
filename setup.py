@@ -11,7 +11,7 @@ setup(
         'geopandas==1.0.1',
         'matplotlib==3.9.2',
         'numpy==2.1.2',
-        'osmium==3.7.0',
+        'osmium==4.0.2',
         'osmnx==1.9.1',
         'overpy==0.7',
         'pandas==2.2.3',
@@ -22,6 +22,7 @@ setup(
         'scipy==1.14.1',
         'setuptools==75.2.0',
         'Shapely==2.0.6',
+        'pytest==7.4.0',
     ],
     entry_points={
         'console_scripts': [
