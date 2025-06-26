@@ -118,7 +118,9 @@ def generate_pt_stops_and_route_file(place, manual_query, output_file_stops):
         # ---------------------
         print("Relations: ", len(result['relations']))
         stops = []
+        relationIter = 0
         for key, relation in result['relations'].items():
+            relationIter += 1
             tags = relation['tags']
             # members = relation.members
             relation_mode = tags['route']
@@ -138,7 +140,7 @@ def generate_pt_stops_and_route_file(place, manual_query, output_file_stops):
                     "mode": relation_mode,
                     "stop_type": member['role'],
                     "member_ref": member_ref,
-                    "name": tags["name"] if "name" in tags.keys() else None,
+                    "name": tags["name"] if "name" in tags.keys() else str(relationIter),
                     "operator": tags["operator"] if "operator" in tags.keys() else None,
                     "ref": tags["ref"] if "ref" in tags.keys() else None,
                     "network": tags["network"] if "network" in tags.keys() else None,
