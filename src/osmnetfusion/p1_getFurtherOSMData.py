@@ -213,8 +213,12 @@ def generate_pt_stops_and_route_file(place, manual_query, output_file_stops):
             return
     
     # process the result
-    gdf_stops = gpd.GeoDataFrame(stops, crs="EPSG:4326")
-    gdf_stops.set_geometry('geometry', inplace=True)
+    if len(stops) > 0:
+        gdf_stops = gpd.GeoDataFrame(stops, crs="EPSG:4326")
+        gdf_stops.set_geometry('geometry', inplace=True)
+    else: 
+        print("No PT stops found.")
+        return
     
     # PLOT TO CHECK RESULTS
     fig, ax = plt.subplots()
