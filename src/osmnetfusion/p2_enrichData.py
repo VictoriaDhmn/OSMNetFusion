@@ -206,7 +206,7 @@ def improve_bike_edges(gdf_edges):
     to_add = gpd.GeoDataFrame(to_add, index=range(len(gdf_edges), len(gdf_edges) + len(to_add)),
                               columns=gdf_edges.columns)
     gdf_edges = gpd.GeoDataFrame(pd.concat([gdf_edges, to_add]))
-    print(f'gdf_edges shape after adding building ratio {gdf_edges.shape}')
+    print(f'gdf_edges shape after adding missing bike edges {gdf_edges.shape}')
     
     return gdf_edges
 
