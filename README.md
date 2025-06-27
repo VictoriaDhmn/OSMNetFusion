@@ -202,18 +202,3 @@ For any questions regarding OSMNetFusion, please reach out to Victoria Dahmen vi
 
 MIT License.
 
-## ToDos
-
-Bug fixes (`X`), improvements (`O`), and tentative (`?`) todos 
-
-- `X` p3: currently bike racks are missing on some links
-- `O` Reduce / fix the deprecation warnings
-- `O` Manually check output - look for bugs
-- `O` Consider street levels / tunnels / bridges
-- `O` p3: maybe add a more simplified bike path classification
-- `O` p3: add/keep additional node on links that are very non-linear i.e. curves/turns
-- `?` Entirely remove RemoveDeg2Nodes?
-- `?` Implement calculating cycle path width (optionally) using a .shp file
-
-
-
