@@ -57,7 +57,7 @@ This is an example of the intial network (dark blue) and the resulting network (
 
 1. Clone the repository.
 2. Set the location in `configFile` (or use the default location). If necessary, modify other parameters or file paths.
-3. Do one of there:
+3. Do one of these:
    - **Recommended**: See `Example_code.ipynb` on how to use this tool as a **package**. 
    - **Alternative**: Run `runSimplification.py`. Note: set `network_data_dir = '../../network_data/'` in `configFile.py`.
 
