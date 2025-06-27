@@ -33,7 +33,7 @@ The `OSMNetFusion` package is a tool designed to topologically simplify and enri
 
 # Statement of need
 
-`OSMNetFusion` offers a powerful approach to creating a streamlined yet information-rich network, which is multimodal, versatile, and well-suited for spatial network analyses, transportation planning, and mobility services. By merging different types of OSM data with external geographic data and then simplifying the network topology without reduced loss of attribute-information, this framework enables efficient, transport-mode-specific analyses. For instance, `OSMNetFusion`'s network simplification and high information density has already been used forassessing route choice of pedestrians or cyclists, which is affected by many variables [@Dahmen:2025]. Similarly, perceived stress levels has also been assessed [@Takayasu:2024]. Furthermore, it can aid mobility service providers to strategically place stations by mapping accessibility based on factors like bike racks and elevation. 
+`OSMNetFusion` offers a powerful approach to creating a streamlined yet information-rich network, which is multimodal, versatile, and well-suited for spatial network analyses, transportation planning, and mobility services. By merging different types of OSM data with external geographic data and then simplifying the network topology without reduced loss of attribute-information, this framework enables efficient, transport-mode-specific analyses. For instance, `OSMNetFusion`'s network simplification and high information density has already been used for assessing route choice of pedestrians or cyclists, which is affected by many variables [@Dahmen:2025]. Similarly, perceived stress levels has also been assessed [@Takayasu:2024]. Furthermore, it can aid mobility service providers to strategically place stations by mapping accessibility based on factors like bike racks and elevation. 
 
 This Python package that leverages parallel programming to reduce runtime (if supported by the local machine). The package can simply be cloned, built, and then imported. The config file contains key parameters that can be set as desired, and a wide range of additional parameters that can be altered to, e.g., change the degree of simplification.
 
@@ -73,7 +73,7 @@ The consolidation process of the node/edge of all attributes (including the geom
 
 # Acknowledgements
 
-Victoria Dahmen acknowledges funding by the TUM Georg Nemetschek Institute Artificial Intelligence for the Built World, and support from Margarita Piscenco on refactoring parts of the code.
-
+Victoria Dahmen acknowledges funding by the TUM Georg Nemetschek Institute Artificial Intelligence for the Built World, and support from Margarita Piscenco on refactoring parts of the code. 
+The author confirms that there are no potential conflicts of interest related to this research. 
 
 # References
