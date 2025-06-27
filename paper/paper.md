@@ -52,17 +52,19 @@ All the downloaded data is added to the OSM network to creates an enriched, deta
 
 ## Network simplification
 
-The topological simplification (and subsequent merging) consists of 8 key steps. The entire process is visualised in Fig. \autoref{fig:simplSteps}, where a simple example of the aim of the topological simplification is shown in Fig. \autoref{fig:example}.
+The topological simplification (and subsequent merging) consists of 8 key steps. The entire process is visualised in Fig. \autoref{fig:simplSteps}, where a simple example of the aim of the topological simplification is shown in Fig. \autoref{fig:example1} and \autoref{fig:example2}.
 
-![Simplification steps.\label{fig:simplSteps}](../visualisations/Vis_SimplificationSteps.png){width=100%}
+![Simplification steps.\label{fig:simplSteps}](../visualisations/Vis_SimplificationSteps.png){width=80%}
 
-![The resulting network.\label{fig:example}](../visualisations/Vis_ExampleResult.png){width=60%}
+![Before vs. after the simplification.\label{fig:example1}](../visualisations/Vis_Example_network_simplified.png){width=60%}
+
+![Mode-specific simplified network: motorized traffic.\label{fig:example2}](../visualisations/Vis_Example_network_motorized.png){width=60%}
 
 ## Information Preservation and Tag Restructuring
 
 It is no trivial task to merge nodes or edges which have a wide range of information associated to them. Hence, the structure visualised in Figure \autoref{fig:attrStructure} has been conceptualised. For each consolidated edge, there is a set of attributes that are associated with a specific mode (bike, walk, PT, car) and a set of general/high-level attributes (like the object ID). Additionally, four tags denote the accessibility of an edge to the key modes of transport, ensuring the easy selection of mode-specific subnetworks. For a given link, each edge is directional, so if the link is bidirectional (i.e., not one-way for all modes that may access the link), \textit{Edge UV} and \textit{Edge VU} are separate entities. % Each edge object retains specific metadata relevant to its allowed modes of travel. The object-oriented approach reflects this design. Each link object has one or two edges, which in turn may have walking, cycling, and/or motorized path objects.
 
-![Structure of the information of the link (black arrow) and edge objects (orange arrows).\label{fig:attrStructure}](../visualisations/Vis_AttrStructure.png){width=70%}
+![Structure of the information of the link (black arrow) and edge objects (orange arrows).\label{fig:attrStructure}](../visualisations/Vis_AttrStructure.png){width=50%}
 
 The consolidation process of the node/edge of all attributes (including the geometries) is explained in depth in the documentation. The result is a compact, well-organised network that is both efficient for computational tasks and accurate and information-rich for practical applications.
 
