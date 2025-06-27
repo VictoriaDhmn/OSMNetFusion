@@ -15,8 +15,8 @@ This is an example of the intial network (dark blue) and the resulting network (
 
 <table>
   <tr>
-    <td><img src="Vis_OSMNetFusion_2.png" alt="Simplified topology (light blue)" style="width: 300px;"/></td>
-    <td><img src="Vis_OSMNetFusion_Attributes.png" alt="Attribute per directed edge" style="width: 300px;"/></td>
+    <td><img src="visualisations/Vis_OSMNetFusion_2.png" alt="Simplified topology (light blue)" style="width: 300px;"/></td>
+    <td><img src="visualisations/Vis_OSMNetFusion_Attributes.png" alt="Attribute per directed edge" style="width: 300px;"/></td>
   </tr>
 </table>
 
