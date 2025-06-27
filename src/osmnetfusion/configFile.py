@@ -36,10 +36,10 @@ else:
 # Only set this to True if the PT stops/routes cannot be retrieved with the OSM API
 manual_OSM_PT_query = False
 
-# Use 'network_data' when using the package approach 
-# When manually running runSimplification.py, use '../../network_data/'
-network_data_dir = 'network_data/'  
-regional_data_dir = 'regional_data/'
+# Use 'network_data' and 'regional_data' when using the package approach 
+# When manually running runSimplification.py, use '../../network_data/' and '../../regional_data/'
+network_data_dir = 'network_data/' # '../../network_data/'  
+regional_data_dir = 'regional_data/' # '../../regional_data/'
 
 # ------------------------------------------------------------------------
 # ONLY ADJUST THE BELOW WHEN NECESSARY -----------------------------------
