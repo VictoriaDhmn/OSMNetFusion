@@ -6,6 +6,8 @@ tags:
   - network topology
   - OpenStreetMap
   - spatial analyses
+  - graph simplification
+  - attribute merging
 authors:
   - name: Victoria Dahmen
     orcid: 0009-0004-0392-2526
@@ -31,11 +33,11 @@ The `OSMNetFusion` package is a tool designed to topologically simplify and enri
 
 # Statement of need
 
-`OSMNetFusion` offers a powerful approach to creating a streamlined yet information-rich network, which is multimodal, versatile, and well-suited for spatial network analyses, transportation planning, and mobility services. By merging different types of OSM data with external geographic data and then simplifying the network topology without reduced loss of attribute-information, this framework enables efficient, transport-mode-specific analyses. For instance, `OSMNetFusion`'s network simplification and high information density has already been used forassessing route choice of pedestrians or cyclists, which is affected by many variables [@Dahmen:2025]. Similarly, perceived stress levels has also been assessed [@Takayasu:2024]. Furthermore, it can aid mobility service providers to strategically place stations by mapping accessibility based on factors like bike racks and elevation. As the mode-specific networks can be selected with ease, the use cases are versatile.
+`OSMNetFusion` offers a powerful approach to creating a streamlined yet information-rich network, which is multimodal, versatile, and well-suited for spatial network analyses, transportation planning, and mobility services. By merging different types of OSM data with external geographic data and then simplifying the network topology without reduced loss of attribute-information, this framework enables efficient, transport-mode-specific analyses. For instance, `OSMNetFusion`'s network simplification and high information density has already been used forassessing route choice of pedestrians or cyclists, which is affected by many variables [@Dahmen:2025]. Similarly, perceived stress levels has also been assessed [@Takayasu:2024]. Furthermore, it can aid mobility service providers to strategically place stations by mapping accessibility based on factors like bike racks and elevation. 
 
 This Python package that leverages parallel programming to reduce runtime (if supported by the local machine). The package can simply be cloned, built, and then imported. The config file contains key parameters that can be set as desired, and a wide range of additional parameters that can be altered to, e.g., change the degree of simplification.
 
-Several existing open-source tools address network simplification for specific use-cases in geospatial and mobility analysis. For instance, Ballo and Axhausen developed a road space reallocation tool [@Ballo:2024b], \textit{SNMan}, which includes a topological network simplification with a reconstruction and visualisation of the lanes per link [@Ballo:2024a]. Fleischmann and Vybornova focus on topological network simplification in a mathematically rigorous manner [@Fleischmann:2024] and recently published `neatnet` [@Fleischmann:2025]. Tools such as OSMnx [@Boeing:2024] also offer simplification capabilities to a limited extent. However, \texttt{OSMNetFusion} specifically aims to simplify multimodal networks (pedestrian, cyclist, motorised traffic) while retaining OSM tag information and integrating additional open-source data, an aspect often absent in current solutions but crucial for comprehensive mobility analysis.
+Several existing open-source tools address network simplification for various use-cases in geospatial and mobility analysis. For instance, Fleischmann and Vybornova focus on topological network simplification in a mathematically rigorous manner [@Fleischmann:2024] and recently published [`neatnet`](https://github.com/uscuni/neatnet) [@Fleischmann:2025]. Tools such as OSMnx [@Boeing:2024] also offer simplification capabilities to a limited extent. Ballo and Axhausen developed a road space reallocation tool [@Ballo:2024b], [`SNMan`](https://github.com/lukasballo/snman), which includes a topological network simplification with a reconstruction and visualisation of the lanes per link [@Ballo:2024a]. However, `OSMNetFusion` specifically aims to simplify multimodal networks (pedestrian, cyclist, motorised traffic) while retaining OSM tag information and integrating additional open-source data, an aspect often absent in current solutions but crucial for comprehensive mobility analysis.
 
 
 # Methodology
