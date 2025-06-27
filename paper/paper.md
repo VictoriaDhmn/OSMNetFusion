@@ -55,10 +55,10 @@ All the downloaded data is added to the OSM network to creates an enriched, deta
 The topological simplification (and subsequent merging) consists of 8 key steps. The entire process is visualised in Fig. \autoref{fig:simplSteps}, where a simple example of the aim of the topological simplification is shown in Fig. \autoref{fig:example}.
 
 
-![Simplification steps.\label{fig:simplSteps}](../visualisations/Vis_SimplificationSteps.png){width=60%}
+![Simplification steps.\label{fig:simplSteps}](../visualisations/Vis_SimplificationSteps.png){width=90%}
 
 
-![The resulting network.\label{fig:example}](../visualisations/Vis_ExampleResult.png){width=70%}
+![The resulting network.\label{fig:example}](../visualisations/Vis_ExampleResult.png){width=60%}
 
 
 ## Information Preservation and Tag Restructuring
