@@ -58,8 +58,8 @@ This is an example of the intial network (dark blue) and the resulting network (
 1. Clone the repository.
 2. Set the location in `configFile` (or use the default location). If necessary, modify other parameters or file paths.
 3. Do one of there:
-    a. **Recommended**: See `Example_code.ipynb` on how to use this tool as a **package**. Note: ensure `network_data_dir = 'network_data/'` in `configFile.py`.
-    b. **Alternative**: Run `runSimplification.py` in an IDE (or otherwise). Note: set `network_data_dir = '../../network_data/'` in `configFile.py`.
+   a. **Recommended**: See `Example_code.ipynb` on how to use this tool as a **package**. Note: ensure `network_data_dir = 'network_data/'` in `configFile.py`.
+   b. **Alternative**: Run `runSimplification.py` in an IDE (or otherwise). Note: set `network_data_dir = '../../network_data/'` in `configFile.py`.
 
 Runtime: approx. 10-20mins for a 9km2 area, if all steps are executed. As the steps build on each other, `p3_simplification` may be executed standalone, yet if `p1_getFurtherOSMData` is altered, the subsequent steps must be rerun. 
 In `runSimplification:main`:
