@@ -16,6 +16,7 @@ authors:
     affiliation: 1 # (Multiple affiliations must be quoted)
   - name: Klaus Bogenberger
     orcid: 0000-0003-3868-9571
+    corresponding: false # (This is how to denote the corresponding author)
     # equal-contrib: true
     affiliation: 1 # (Multiple affiliations must be quoted)
 #   - name: ...
