@@ -14,6 +14,10 @@ authors:
     corresponding: true # (This is how to denote the corresponding author)
     # equal-contrib: true
     affiliation: 1 # (Multiple affiliations must be quoted)
+  - name: Klaus Bogenberger
+    orcid: 0000-0003-3868-9571
+    # equal-contrib: true
+    affiliation: 1 # (Multiple affiliations must be quoted)
 #   - name: ...
 #     orcid: ...
 #     equal-contrib: true # (This is how you can denote equal contributions between multiple authors)
@@ -21,7 +25,7 @@ authors:
 affiliations:
  - name: Chair of Traffic Engineering and Control, Technical University of Munich, Germany
    index: 1
-date: 27 June 2025
+date: 2 July 2025
 bibliography: paper.bib
 
 ---
