@@ -12,14 +12,14 @@ authors:
   - name: Victoria Dahmen
     orcid: 0009-0004-0392-2526
     corresponding: true # (This is how to denote the corresponding author)
-    equal-contrib: true
+    # equal-contrib: true
     affiliation: 1 # (Multiple affiliations must be quoted)
 #   - name: ...
 #     orcid: ...
 #     equal-contrib: true # (This is how you can denote equal contributions between multiple authors)
 #     affiliation: 1
 affiliations:
- - name: Chair of Traffic Engineering and Control, Technical University of Munich, Germnay
+ - name: Chair of Traffic Engineering and Control, Technical University of Munich, Germany
    index: 1
 date: 27 June 2025
 bibliography: paper.bib
@@ -33,28 +33,28 @@ The `OSMNetFusion` package is a tool designed to topologically simplify and enri
 
 # Statement of need
 
-`OSMNetFusion` offers a powerful approach to creating a streamlined yet information-rich network, which is multimodal, versatile, and well-suited for spatial network analyses, transportation planning, and mobility services. By merging different types of OSM data with external geographic data and then simplifying the network topology without reduced loss of attribute-information, this framework enables efficient, transport-mode-specific analyses. For instance, `OSMNetFusion`'s network simplification and high information density has already been used for assessing route choice of pedestrians or cyclists, which is affected by many variables [@Dahmen:2025]. Similarly, perceived stress levels has also been assessed [@Takayasu:2024]. Furthermore, it can aid mobility service providers to strategically place stations by mapping accessibility based on factors like bike racks and elevation. 
+`OSMNetFusion` offers a powerful approach to creating a streamlined yet information-rich network, which is multimodal, versatile, and well-suited for spatial network analyses, transportation planning, and mobility services. By merging different types of OSM data with external geographic data and then simplifying the network topology with reduced loss of attribute-information, this framework enables efficient, transport-mode-specific analyses. For instance, `OSMNetFusion`'s network simplification and high information density has already been used for assessing route choice of cyclists, which is affected by many variables [@Dahmen:2025]. Similarly, perceived stress levels have also been studied [@Takayasu:2024]. Furthermore, it could aid mobility service providers to strategically place stations by mapping accessibility based on factors like bike racks and elevation. 
 
-This Python package that leverages parallel programming to reduce runtime (if supported by the local machine). The package can simply be cloned, built, and then imported. The config file contains key parameters that can be set as desired, and a wide range of additional parameters that can be altered to, e.g., change the degree of simplification.
+This Python package can simply be cloned, built, and then imported. The config file contains key parameters that can be set as desired, and a wide range of additional parameters that can be altered, e.g., to change the degree of simplification. This package leverages parallel programming to reduce runtime (if supported by the local machine). 
 
-Several existing open-source tools address network simplification for various use-cases in geospatial and mobility analysis. For instance, Fleischmann and Vybornova focus on topological network simplification in a mathematically rigorous manner [@Fleischmann:2024] and recently published [`neatnet`](https://github.com/uscuni/neatnet) [@Fleischmann:2025]. Tools such as OSMnx [@Boeing:2024] also offer simplification capabilities to a limited extent. Ballo and Axhausen developed a road space reallocation tool [@Ballo:2024b], [`SNMan`](https://github.com/lukasballo/snman), which includes a topological network simplification with a reconstruction and visualisation of the lanes per link [@Ballo:2024a]. However, `OSMNetFusion` specifically aims to simplify multimodal networks (pedestrian, cyclist, motorised traffic) while retaining OSM tag information and integrating additional open-source data, an aspect often absent in current solutions but crucial for comprehensive mobility analysis.
+Several existing open-source tools address network simplification for various use-cases in geospatial and mobility analysis. For instance, Fleischmann and Vybornova focus on topological network simplification in a mathematically rigorous manner [@Fleischmann:2024] and recently published [`neatnet`](https://github.com/uscuni/neatnet) [@Fleischmann:2025]. Tools such as OSMnx [@Boeing:2024] also offer simplification capabilities to an extent, yet tag-information is lost. Ballo and Axhausen developed a road space reallocation tool [@Ballo:2024b], [`SNMan`](https://github.com/lukasballo/snman), which includes a topological network simplification with a reconstruction and visualisation of the lanes per link [@Ballo:2024a]. `OSMNetFusion` specifically aims to simplify multimodal networks (pedestrian, cyclist, motorised traffic) while retaining OSM tag information and integrating additional open-source data, an aspect typically absent in current solutions but crucial for comprehensive mobility analyses.
 
 
 # Methodology
 
-The framework is composed of three key steps: the data retrieval, the network enrichment, and the network simplification. These are described in the subsequent sections.
+The framework is composed of three key steps: data retrieval, network enrichment, and network simplification. 
 
 ## Data retrieval
 
-OSM networks contain a wide range of metadata tags covering information from road surface to speed limits and lighting conditions. The OSM platform also contains many items other than the road network, such as information about land-use, public transit, restaurants and mobility-related infrastructure. Additionally, there also exists other relevant open-source data. Hence, data is gathered from all three categories. As each data is either network-specific or valid for the entire region of interest, the data is saved in two folders depending on this characteristic.
+OSM networks contain a wide range of metadata tags covering information from road surface to speed limits and lighting conditions. The OSM platform also contains many items other than the road network, such as information about land-use, public transit, restaurants and mobility-related infrastructure. Additionally, there also exists other relevant open-source data. Hence, data is gathered from all three categories. 
 
 ## Network enrichment
 
-All the downloaded data is added to the OSM network to creates an enriched, detailed network that captures more than just the road layout. This multi-layered network provides the foundation for the last step, where the network is simplified (consolidated) to produce a model that supports various modes of transport and retains essential topographic and infrastructure characteristics. 
+All the downloaded data is added to the OSM network to create an enriched, detailed network that captures more than just the road layout. This multi-layered network provides the foundation for the last step, where the network is topologically simplified (consolidated) to produce a model that supports various modes of transport and retains essential topographic and infrastructure characteristics. 
 
 ## Network simplification
 
-The topological simplification (and subsequent merging) consists of 8 key steps. The entire process is visualised in Fig. \autoref{fig:simplSteps}, where a simple example of the aim of the topological simplification is shown in Fig. \autoref{fig:example1} and \autoref{fig:example2}.
+The topological simplification (and subsequent merging) consists of 8 key steps. The process is visualised in Fig. \autoref{fig:simplSteps}. An example of the topological simplification is shown in Fig. \autoref{fig:example1} and \autoref{fig:example2}.
 
 ![Simplification steps.\label{fig:simplSteps}](../visualisations/Vis_SimplificationSteps.png){width=80%}
 
@@ -64,11 +64,11 @@ The topological simplification (and subsequent merging) consists of 8 key steps.
 
 ## Information Preservation and Tag Restructuring
 
-It is no trivial task to merge nodes or edges which have a wide range of information associated to them. Hence, the structure visualised in Figure \autoref{fig:attrStructure} has been conceptualised. For each consolidated edge, there is a set of attributes that are associated with a specific mode (bike, walk, PT, car) and a set of general/high-level attributes (like the object ID). Additionally, four tags denote the accessibility of an edge to the key modes of transport, ensuring the easy selection of mode-specific subnetworks. For a given link, each edge is directional, so if the link is bidirectional (i.e., not one-way for all modes that may access the link), \textit{Edge UV} and \textit{Edge VU} are separate entities. % Each edge object retains specific metadata relevant to its allowed modes of travel. The object-oriented approach reflects this design. Each link object has one or two edges, which in turn may have walking, cycling, and/or motorized path objects.
+It is no trivial task to merge nodes or edges which have a wide range of information associated to them. Hence, the structure visualised in Figure \autoref{fig:attrStructure} was conceptualised. For each consolidated edge, there are sets of attributes that are each associated with a specific mode (bike, walk, PT, car) and a set of general/high-level attributes (like the object ID). Additionally, four tags denote the accessibility of an edge to the key modes of transport, ensuring the easy selection of mode-specific subnetworks. For a given link, each edge is directional, so if the link is bidirectional (i.e., not one-way for all modes that may access the link), \textit{Edge UV} and \textit{Edge VU} are separate entities. Each edge object retains specific metadata relevant to its allowed modes of travel. The object-oriented approach reflects this design. Each link object has one or two edges, which in turn may have walking, cycling, and/or motorized path objects.
 
 ![Structure of the information of the link (black arrow) and edge objects (orange arrows).\label{fig:attrStructure}](../visualisations/Vis_AttrStructure.png){width=35%}
 
-The consolidation process of the node/edge of all attributes (including the geometries) is explained in depth in the documentation. The result is a compact, well-organised network that is both efficient for computational tasks and accurate and information-rich for practical applications.
+The consolidation process of the node/edge attributes (including the geometries) is explained in depth in the documentation. The result is a compact, well-organised network that is both efficient for computational tasks, accurate and information-rich for practical applications.
 
 
 # Acknowledgements
