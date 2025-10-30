@@ -332,6 +332,8 @@ def main(configFile=None):
     gdf_edges.replace('none',np.nan,inplace=True,regex=True)    
     # convert strings and lists to numbers, where applicable
     gdf_edges.maxspeed = gdf_edges.maxspeed.apply(lambda x: clean(x,asFloat=True,keep='max'))
+    gdf_edges['old_osmid'] = gdf_edges['old_osmid'].apply(lambda x: eval(x) if isinstance(x, str) else x)
+    gdf_edges['old_osmid'] = gdf_edges['old_osmid'].apply(lambda x: [x] if not isinstance(x, list) else x)
     gdf_edges.old_osmid = gdf_edges.old_osmid.apply(lambda x: clean(x,asFloat=True))
     gdf_edges.lanes = gdf_edges.lanes.apply(lambda x: clean(x,asFloat=True,keep='max'))
     gdf_edges.width = gdf_edges.width.apply(lambda x: clean(x,asFloat=True,keep='min'))

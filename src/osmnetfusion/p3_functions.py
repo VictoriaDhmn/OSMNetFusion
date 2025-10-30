@@ -37,6 +37,7 @@ Classes
 - MotorizedEdge: Class for motorized edge objects.
 """
 
+import ast
 import math
 import numpy as np
 import shapely as sh
@@ -1071,7 +1072,7 @@ def clean(a,asFloat=False,keep='all'):
             l = []
             for b in tmp2:
                 b_isNum = False
-                if (type(a)==float) | (type(a)==int) | (type(a)==np.float64) | (type(a)==np.int64):
+                if (type(b)==float) | (type(b)==int) | (type(b)==np.float64) | (type(b)==np.int64):
                     b_isNum = True
                 if type(b)==str:
                     b_isNum = b.replace(',','').replace('.','').isdigit()
@@ -1094,7 +1095,7 @@ def clean(a,asFloat=False,keep='all'):
         l = []
         for b in a:
             b_isNum = False
-            if (type(a)==float) | (type(a)==int) | (type(a)==np.float64) | (type(a)==np.int64):
+            if (type(b)==float) | (type(b)==int) | (type(b)==np.float64) | (type(b)==np.int64):
                 b_isNum = True
             if type(b)==str:
                 b_isNum = b.replace(',','').replace('.','').isdigit()
@@ -1401,7 +1402,9 @@ class Node():
         self.traffic_signals = True if 'traffic_signals' in self.infra else False
         
         self.l_id = listify(self.df.osmid,asInt=True)
-        self.l_osmid = listify(self.df.old_osmid,asInt=True) if (len(self.df.old_osmid.dropna().unique())>0) else None
+        self.df['old_osmid'] = self.df['old_osmid'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) and x.startswith('[') else x)
+        self.df["old_osmid"] = self.df["old_osmid"].apply(lambda x: x if isinstance(x, list) else ([] if pd.isna(x) else [x]))
+        self.l_osmid = listify(self.df.old_osmid,asInt=True) if (len(self.df.old_osmid.dropna())>0) else None
         self.l_highway_conn = listify(self.df.highway_conn)
         self.l_highway_rank = listify(self.df.highway_rank,asInt=True)
 
@@ -1543,6 +1546,8 @@ class AnEdge():
         
         # multiple values
         self.l_id = listify(self.subset.osmid,asInt=True)
+        self.df['old_osmid'] = self.df['old_osmid'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) and x.startswith('[') else x)
+        self.df["old_osmid"] = self.df["old_osmid"].apply(lambda x: x if isinstance(x, list) else ([] if pd.isna(x) else [x]))
         self.l_osmid = listify(self.subset.old_osmid,asInt=True)
         self.l_old_u = listify(self.subset.old_u,asInt=True)
         self.l_old_v = listify(self.subset.old_v,asInt=True)
