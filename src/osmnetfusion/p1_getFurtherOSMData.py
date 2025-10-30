@@ -206,7 +206,7 @@ def generate_pt_stops_and_route_file(place, manual_query, output_file_stops):
             print(query)
             print('Note: you might have to use admin_level 4 or 8 instead of 6.')
             print("Note: alternatively, you can also select a boundary area, and remove ['name'='...'] from the query.")
-            print("3. Once you obtain results: Select 'Export'. Copy 'OSM Rohdaten'. Paste into an empty xml file and save as osmnx_PTStops_query.xml here:", output_file_stops)
+            print("3. Once you obtain results: Select 'Export'. Copy 'OSM Rohdaten'. Paste into an empty xml file and save as osmnx_PTStops_query.xml in this folder:", output_file_stops)
             print('4. In configFile, set the manual_OSM_query=True.')
             print('5. Rerun this script.')
             print('##################################################')
@@ -216,6 +216,7 @@ def generate_pt_stops_and_route_file(place, manual_query, output_file_stops):
     if len(stops) > 0:
         gdf_stops = gpd.GeoDataFrame(stops, crs="EPSG:4326")
         gdf_stops.set_geometry('geometry', inplace=True)
+        print("{} PT stops found.".format(gdf_stops.shape[0]))
     else: 
         print("No PT stops found.")
         return
