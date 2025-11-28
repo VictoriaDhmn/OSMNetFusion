@@ -250,26 +250,39 @@ def getHighestRankingRoadOfNode(nodesIn,edgesIn):
     edges = pd.DataFrame(edgesIn,columns=edgesIn.columns)[['u','v','highway_rank','highway']]
     nodes = pd.DataFrame(nodesIn,columns=nodesIn.columns)
     nodes['nodeIdx'] = nodes.reset_index().index.values
-    
+    order_init = nodes['nodeIdx'].tolist()
+
     # find out which nodes are connected to which edges
-    df1 = pd.merge(edges,nodes[['osmid','nodeIdx']], how='inner', left_on='u', right_on='osmid')
-    df2 = pd.merge(edges,nodes[['osmid','nodeIdx']], how='inner', left_on='v', right_on='osmid')
-    df = pd.concat([df1,df2]).drop_duplicates()
+    df1 = pd.merge(edges,nodes[['osmid','nodeIdx']], how='right', left_on='u', right_on='osmid')
+    df2 = pd.merge(edges,nodes[['osmid','nodeIdx']], how='right', left_on='v', right_on='osmid')
+    df = pd.concat([df1,df2])#.drop_duplicates()
     
     # sort such that the most important road (highest highway_rank) is first 
     df = df.sort_values(by=['osmid','highway_rank'], ascending=[True,False])
     # select the first two for each osm id
-    df_top2 = df.groupby('osmid').nth([0,1]).reset_index()
+    # df_top2 = df.groupby('osmid').nth([0,1]).reset_index()
+    df_top2 = df.groupby('osmid').head(2).reset_index()
 
     # merge into one row - df highway is a string like "trunk,primary"
     # NOTE: need to do 'first' for highway (rather than lambda x: ','.join(x)), as this value will be used to buffer the nodes
-    df = df_top2[['nodeIdx','highway_rank','highway','osmid']].groupby('osmid').agg({'nodeIdx':'first', 'highway_rank':'mean','highway': 'first'}).reset_index()
-    
+    df_agg = df_top2.groupby('osmid').agg({
+        'nodeIdx':'first',
+        'highway_rank':'mean',
+        'highway':'first'
+    }).reset_index()
+
     # ensure same order as before
-    df.sort_values(by='nodeIdx', inplace=True, ascending=True)
-    
-    mostImportantHighway = df['highway'].tolist()
-    mostImportantHighway_rank = df['highway_rank'].tolist()
+    # PREV
+    # df_agg.sort_values(by='nodeIdx', inplace=True, ascending=True)
+    # df_final = df_agg.set_index('nodeIdx').loc[order_init,:].reset_index()
+    # NEW
+    # left-merge back to the full nodes, preserving order and filling missing with NaN
+    df_final = pd.merge(nodes[['osmid','nodeIdx']], df_agg[['osmid','highway_rank','highway','nodeIdx']],
+                        on='osmid', how='left', suffixes=('','_agg'))
+    df_final = df_final.set_index('nodeIdx').loc[order_init].reset_index()
+
+    mostImportantHighway = df_final['highway'].tolist()
+    mostImportantHighway_rank = df_final['highway_rank'].tolist()
     return mostImportantHighway,mostImportantHighway_rank
     
 def getGeomBuffered(edges,highway_buffers_custom=None):
