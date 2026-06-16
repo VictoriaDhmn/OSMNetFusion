@@ -402,7 +402,16 @@ def clusterNodes(nodes,again=False, clusterThreshold=40):
     # 1. Perform a spatial join to find overlapping areas
     nodes = nodes.reset_index(drop=True)
     nodes = nodes.set_geometry('geom_buffered')
-    overlapping = gpd.sjoin(nodes, nodes, predicate="intersects",how='inner')
+    # FAST
+    pairs = nodes.sindex._tree.query(nodes.geometry.values, predicate="intersects")
+    left_idx = pairs[0]
+    right_idx = pairs[1]
+    overlapping = (nodes.iloc[left_idx].reset_index(drop=False).rename(columns={"index": "index_left"}))
+    overlapping["index_right"] = right_idx
+
+    # 3. Re-index to match GeoPandas sjoin output format
+    #    sjoin produces an index equal to the left-index of the join
+    overlapping.index = left_idx
 
     # 2. Identify clusters of overlapping areas using connected components
     # ADJ. MATRIX - using SPARSE matrices
