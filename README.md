@@ -2,7 +2,9 @@
 
 ## Overview
 
-**OSMNetFusion**: A **topologically-simplified** OSM network, where **tag-information** is preserved, enriched with additional (open!) data sources - designed to provide a streamlined, **multimodal** network. **The only input required is the location of interest.**
+**OSMNetFusion**: A **topologically-simplified** OSM network, where **tag-information** is preserved, enriched with additional (open!) data sources - designed to provide a streamlined, **multimodal** network. **The only input required is the location of interest.** 
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17485918.svg)](https://doi.org/10.5281/zenodo.17485918)
 
 - Idea
 - Input data
