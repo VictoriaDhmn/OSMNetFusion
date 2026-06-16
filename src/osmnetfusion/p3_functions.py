@@ -514,7 +514,7 @@ def splitEdgeIfInNodeBuffer(edgesIn,nodesIn,allNodes=0,idxStart=0):
     while i<np.max([nodes.index.max(),edges.index.max()]):
         i*=10
         if i>100000000000000000000:
-            print(xxx)
+            raise ValueError('ERROR: input edge/node indices are too high. Update the newEdgeIdx and newNodeIdx in the splitEdgeIfInNodeBuffer function.')
     newedgeidx = int(i) 
     newnodeidx = int(i)
     counterSIPT = 0
