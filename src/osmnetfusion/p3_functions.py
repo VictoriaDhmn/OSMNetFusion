@@ -713,8 +713,15 @@ def mergeEdgesWithSameNodes(edges):
     gatherLinkObjects = []
     deleted_edges = [] # some edges are simply deleted
     
-    for itr,row in edges.loc[:,:].iterrows(): 
-    
+    u = edges["new_u"].to_numpy()
+    v = edges["new_v"].to_numpy()
+    edges["_uv_key"] = np.minimum(u, v).astype("int64") * 10**10 + np.maximum(u, v).astype("int64")
+    grouped = edges.groupby("_uv_key", sort=False)
+
+    # for itr,row in edges.loc[:,:].iterrows(): 
+    for itr in edges.index:
+        row = edges.loc[itr]
+
         # disregard edges that start and end at the same node
         if row.new_u==row.new_v:
             # NOTE: SOME EDGES ARE REMOVED HERE
@@ -725,27 +732,30 @@ def mergeEdgesWithSameNodes(edges):
             continue
         else:
             edges.loc[itr,'merged'] = 'k' # keep
-        
+
         # find edges intersecting the buffer zone of the considered edge
-        lines = edges[((edges.new_u==row.new_u) & (edges.new_v==row.new_v)) | \
-                      ((edges.new_u==row.new_v) & (edges.new_v==row.new_u))]
+        # lines = edges[((edges.new_u==row.new_u) & (edges.new_v==row.new_v)) | \
+        #               ((edges.new_u==row.new_v) & (edges.new_v==row.new_u))]
+        lines = grouped.get_group(edges.loc[itr, "_uv_key"])
         if len(lines)<2: # ==0
             linesToMerge = None
         else:
             linesToMerge = []
-            for i,r in lines.iterrows():
-                if edges.loc[i,'merged'] == 'k': # or == 'r'?
+            for i in lines.index:
+                if i == itr:
                     continue
-                # disregard edges that stat and end at the same node
-                if r.new_u==r.new_v:
-                    edges.loc[i,'merged'] == 'r'
+                if edges.loc[i, "merged"] == "k":
+                    continue
+                r = edges.loc[i]
+                # disregard edges that start and end at the same node
+                if r.new_u == r.new_v:
+                    edges.loc[i, "merged"] = "r"
                     deleted_edges.append(r.osmid)
                     continue
-                # NOTE: check for length, as 2 roads like this 'D' shouldn't be merged
-                l1, l2 = row['length'], r['length']
-                if (l1<0.0000001) | (l2<0.0000001):
+                l1, l2 = row["length"], r["length"]
+                if (l1<1e-7) or (l2<1e-7):
                     linesToMerge.append(r)
-                elif (max(l1/l2,l2/l1) < 1.5):
+                elif max(l1/l2, l2/l1)<1.5:
                     linesToMerge.append(r)
             if len(linesToMerge)<1:
                 continue
@@ -773,6 +783,9 @@ def mergeEdgesWithSameNodes(edges):
             print('Something is wrong here! UV and VU are None. Idx/u/v/length:',row.name,row.new_u,row.new_v,row['length'])
             continue
         gatherLinkObjects.append(mergedLink)
+
+    # NEW ##############################
+    edges.drop(columns="_uv_key", inplace=True)
 
     return gatherLinkObjects, set(deleted_edges)
  
