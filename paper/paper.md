@@ -26,7 +26,7 @@ authors:
 affiliations:
  - name: Chair of Traffic Engineering and Control, Technical University of Munich, Germany
    index: 1
-date: 2 July 2025
+date: 16 June 2026
 bibliography: paper.bib
 
 ---
@@ -42,12 +42,17 @@ The [`OSMNetFusion`](https://github.com/VictoriaDhmn/OSMNetFusion) package is a 
 
 This Python package can simply be cloned, built, and then imported. The config file contains key parameters that can be set as desired, and a wide range of additional parameters that can be altered, e.g., to change the degree of simplification. This package leverages parallel programming to reduce runtime (if supported by the local machine). 
 
+# Statement of the field
+
 Several existing open-source tools address network simplification for various use-cases in geospatial and mobility analysis. For instance, Fleischmann and Vybornova focus on topological network simplification in a mathematically rigorous manner [@Fleischmann:2024] and recently published [`neatnet`](https://github.com/uscuni/neatnet) [@Fleischmann:2025]. Tools such as [`OSMnx`](https://github.com/gboeing/osmnx) [@Boeing:2024] also offer simplification capabilities to an extent, yet tag-information is lost. Ballo and Axhausen developed a road space reallocation tool [@Ballo:2024b], [`SNMan`](https://github.com/lukasballo/snman), which includes a topological network simplification with a reconstruction and visualisation of the lanes per link [@Ballo:2024a]. `OSMNetFusion` specifically aims to simplify multimodal networks (pedestrian, cyclist, motorised traffic) while retaining OSM tag information and integrating additional open-source data, an aspect typically absent in current solutions but crucial for comprehensive mobility analyses.
 
 
-# Methodology
+# Software Design 
 
-The framework is composed of three key steps: data retrieval, network enrichment, and network simplification. 
+The framework is composed of three key steps: data retrieval, network enrichment, and network simplification, as visualised in Figure \autoref{fig:softwareDesign}.
+
+![Software design of OSMNetFusion. \label{fig:softwareDesign}](../visualisations/Software_design.svg){width=95%}
+
 
 ## Data retrieval
 
@@ -75,6 +80,13 @@ It is no trivial task to merge nodes or edges which have a wide range of informa
 
 The consolidation process of the node/edge attributes (including the geometries) is explained in depth in the documentation. The result is a compact, well-organised network that is both efficient for computational tasks, accurate and information-rich for practical applications.
 
+# Research impact statement
+
+This tool has enabled various reserach contributions. It has been used to develop a bicycle routing model [@Dahmen:2025], to make more informed transport mode choice predictions [@Dahmen_MC] [@Dahmen_IMR], and to evaluate the impact of travel stress and infrastructure quality on the cycling mode share [@Takayasu:2024]. The reduced network complexity also facilitated mapmatching [@Dahmen_ML] [@Dahmen_RC].
+
+# AI Usage Disclosure
+
+Generative AI (GitHub Copilot, powered by Claude) was used to assist in creating a first draft of the the software design figure, which was then reviewed and edited by the authors. All software design decisions, algorithmic implementations, and technical content were curated and made by the authors themselves. 
 
 # Acknowledgements
 
