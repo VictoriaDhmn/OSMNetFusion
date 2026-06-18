@@ -51,7 +51,7 @@ Several existing open-source tools address network simplification for various us
 
 The framework is composed of three key steps: data retrieval, network enrichment, and network simplification, as visualised in Figure \autoref{fig:softwareDesign}.
 
-![Software design of OSMNetFusion. \label{fig:softwareDesign}](../visualisations/Software_design.svg){width=95%}
+![Software design of OSMNetFusion. \label{fig:softwareDesign}](../visualisations/Software_design.png){width=95%}
 
 
 ## Data retrieval
