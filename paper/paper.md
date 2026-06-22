@@ -82,7 +82,7 @@ The consolidation process of the node/edge attributes (including the geometries)
 
 # Research impact statement
 
-This tool has enabled various reserach contributions. It has been used to develop a bicycle routing model [@Dahmen:2025], to make more informed transport mode choice predictions [@Dahmen_MC] [@Dahmen_IMR], and to evaluate the impact of travel stress and infrastructure quality on the cycling mode share [@Takayasu:2024]. The reduced network complexity also facilitated mapmatching [@Dahmen_ML] [@Dahmen_RC].
+This tool has enabled various reserach contributions. It has been used to develop a bicycle routing model [@Dahmen:2025], to make more informed transport mode choice predictions [@dahmen_modechoice_2024; @Dahmen_IMR], and to evaluate the impact of travel stress and infrastructure quality on the cycling mode share [@Takayasu:2024]. The reduced network complexity also facilitated mapmatching [@Dahmen_ML; @Dahmen:2025].
 
 # AI Usage Disclosure
 
