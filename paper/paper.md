@@ -42,7 +42,7 @@ The [`OSMNetFusion`](https://github.com/VictoriaDhmn/OSMNetFusion) package is a 
 
 This Python package can simply be cloned, built, and then imported. The config file contains key parameters that can be set as desired, and a wide range of additional parameters that can be altered, e.g., to change the degree of simplification. This package leverages parallel programming to reduce runtime (if supported by the local machine). 
 
-# Statement of the field
+# State of the field
 
 Several existing open-source tools address network simplification for various use-cases in geospatial and mobility analysis. For instance, Fleischmann and Vybornova focus on topological network simplification in a mathematically rigorous manner [@Fleischmann:2024] and recently published [`neatnet`](https://github.com/uscuni/neatnet) [@Fleischmann:2025]. Tools such as [`OSMnx`](https://github.com/gboeing/osmnx) [@Boeing:2024] also offer simplification capabilities to an extent, yet tag-information is lost. Ballo and Axhausen developed a road space reallocation tool [@Ballo:2024b], [`SNMan`](https://github.com/lukasballo/snman), which includes a topological network simplification with a reconstruction and visualisation of the lanes per link [@Ballo:2024a]. `OSMNetFusion` specifically aims to simplify multimodal networks (pedestrian, cyclist, motorised traffic) while retaining OSM tag information and integrating additional open-source data, an aspect typically absent in current solutions but crucial for comprehensive mobility analyses.
 
@@ -82,7 +82,7 @@ The consolidation process of the node/edge attributes (including the geometries)
 
 # Research impact statement
 
-This tool has enabled various reserach contributions. It has been used to develop a bicycle routing model [@Dahmen:2025], to make more informed transport mode choice predictions [@dahmen_modechoice_2024; @Dahmen_IMR], and to evaluate the impact of travel stress and infrastructure quality on the cycling mode share [@Takayasu:2024]. The network's information-richness also aided in analysing cyclists' route perception [@dahmen_2026_sequence], while the reduced network complexity facilitated mapmatching in all of these cases.
+This tool has enabled various research contributions. It has been used to develop a bicycle routing model [@Dahmen:2025], to make more informed transport mode choice predictions [@dahmen_modechoice_2024; @Dahmen_IMR], and to evaluate the impact of travel stress and infrastructure quality on the cycling mode share [@Takayasu:2024]. The network's information-richness also aided in analysing cyclists' route perception [@dahmen_2026_sequence], while the reduced network complexity facilitated mapmatching in all of these cases.
 
 # AI Usage Disclosure
 
